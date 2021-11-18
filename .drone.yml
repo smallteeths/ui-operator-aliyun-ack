@@ -46,5 +46,20 @@ steps:
     event:
     - tag
 
+- name: github_binary_prerelease
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: github_token
+    checksum:
+    - sha256
+    files:
+    - dist/*
+    prerelease: true
+    title: "Pre-release ${DRONE_TAG}"
+  when:
+    event:
+    - tag
+
 node:
   instance: agent-amd64
