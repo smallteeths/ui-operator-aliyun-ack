@@ -263,7 +263,6 @@ const languages = {
 /*!!!!!!!!!!!DO NOT CHANGE START!!!!!!!!!!!*/
 export default Ember.Component.extend(ClusterDriver, {
   driverName:  '%%DRIVERNAME%%',
-  configField: '%%DRIVERNAME%%EngineConfig',
   app:         service(),
   router:      service(),
   session:     service(),
@@ -303,8 +302,8 @@ export default Ember.Component.extend(ClusterDriver, {
   nodePoolList:          [],
   clusterChoices:        [],
 
+  cloudCredentialDriverName: 'aliyun',
   config: null,
-  // config:      alias('cluster.%%DRIVERNAME%%kcsEngineConfig'),
 
   init() {
     // This does on the fly template compiling, if you mess with this :cry:

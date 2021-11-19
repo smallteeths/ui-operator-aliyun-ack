@@ -10,7 +10,7 @@
     {{#if (eq step 1)}}
       {{form-auth-cloud-credential
         cloudCredentials=cloudCredentials
-        driverName=driverName
+        driverName=cloudCredentialDriverName
         parseAndCollectErrors=(action "errorHandler")
         finishAndSelectCloudCredential=(action "finishAndSelectCloudCredential")
         primaryResource=primaryResource
