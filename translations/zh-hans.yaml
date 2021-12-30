@@ -7,6 +7,7 @@ clusterNew:
       loading: '从Alibaba ACK加载可用区域'
       title: 帐户访问
       detail: 选择将用于启动阿里巴巴Kubernetes服务的地区和API密钥
+      nodePoolUpdateError: 节点池正在创建中，无法升级，请稍后再试。
     clusterSelect:
       title: 选择集群
       detail: 选择要注册的 ACK 集群

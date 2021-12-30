@@ -253,10 +253,10 @@ const DEFAULT_NODE_GROUP_CONFIG = {
 const MASTER = [{value:3,label:3},{value:5,label:5}];
 
 const languages = {
-  'en-us': { "clusterNew": { "aliyunkcs": { "label": "Aliyun Kubernetes Container Service", "shortLabel": "Alibaba ACK", "access": { "next": "Next: Configure Cluster", "loading": "Loading Zones from Alibaba ACK", "title": "Account Access", "detail": "Choose the region and API Key that will be used to launch Alibaba Kubernetes Service" }, "clusterSelect": { "title": "Select Cluster", "detail": "Select the ACK cluster you want to register", "next": "Register Cluster", "importCluster": "Cluster", "required": "Import Cluster is required", "placeholder": "Choose" }, "cluster": { "title": "Cluster Configuration", "detail": "Choose the Zone and Kubernetes version that will be used to launch Alibaba Kubernetes Service", "next": "Next: Configure Master Nodes", "loading": "Loading Availability Zones from Alibaba", "name": { "required": "Cluster name is required" } }, "clusters": { "k8s": "Dedicated Kubernetes", "managed": "Managed Kubernetes", "label": "Cluster Type" }, "master": { "title": "Master Nodes", "detail": "Configure the master nodes that will be used to launch Alibaba Kubernetes Service", "next": "Next: Configure Worker Nodes", "loading": "Loading Key Pairs from Alibaba" }, "worker": { "title": "Worker Nodes", "detail": "Configure the worker nodes that will be used to launch Alibaba Kubernetes Service", "required": "Worker Nodes is required" }, "disk": { "cloud": "Ordinary Disk", "ephemeralSsd": "Local SSD Disk", "efficiency": "Ultra Disk", "ssd": "SSD Disk", "essd": "ESSD Disk" }, "rootSize": { "label": "Root Disk Size", "placeholder": "e.g. 120" }, "rootType": { "label": "Root Disk Type", "required": "Root Disk Type is required" }, "storageType": { "label": "Data Disk Type", "required": "Data Disk Type is required" }, "storageSize": { "label": "Data Disk Size", "placeholder": "e.g. 120" }, "masterNum": { "label": "Master Nodes Count", "help": "The count of master nodes will be launched in this Kubernetes cluster" }, "nodePoolName": { "label": "Nood Pool Name", "placeholder": "e.g. nodepool", "required": "Worker Node Name is required" }, "numOfNodes": { "label": "Worker Nodes Count", "placeholder": "e.g. 3", "required": "Worker Nodes Count is required", "help": "The count of worker nodes will be launched in this Kubernetes cluster" }, "keyPair": { "label": "Key Pair", "required": "Key Pair is required" }, "resourceGroup": { "label": "Resource Group", "all": "Account's all Resources" }, "region": { "label": "Region" }, "vpcId": { "label": "VPC", "prompt": "Choose VPC...", "required": "VPC is required", "default": "Default VPC" }, "vswitchId": { "label": "VSwitch", "prompt": "Choose VSwitch...", "required": "VSwitch is required", "default": "Default VSwitch" }, "proxyMode": { "label": "Kube-Proxy Mode" }, "containerCidr": { "label": "Pod CIDR Block", "required": "Pod CIDR Block is required", "invalid": "Pod CIDR Block is invalid", "placeholder": "Specify a valid CIDR block that contains only internal IP addresses, namely one of the following CIDR blocks or their subnets: 10.0.0.0/8 172.16-31.0.0/12-16 and 192.168.0.0/16.Cannot be duplicated with the VPC and the network segment used by the existing kubernetes cluster in the VPC" }, "serviceCidr": { "label": "Service CIDR", "required": "Service CIDR is required", "invalid": "Service CIDR is invalid", "placeholder": "Valid CIDR blocks include: 10.0.0.0/8 172.16-31.0.0/12-16 and 192.168.0.0/16.Cannot be duplicated with the VPC and the network segment used by the existing kubernetes cluster in the VPC" }, "nodeCidrMask": { "label": "IP Addresses per Node" }, "snatEntry": { "label": "Configure SNAT", "placeholder": "Configure SNAT for VPC" }, "endpointPublicAccess": { "label": "Public Access", "placeholder": "Expose API Server with EIP" }, "masterInstanceChargeType": { "label": "Billing Method", "prePaid": "Subscription", "postPaid": "Pay-As-You-Go" }, "masterPeriod": { "label": "Duration", "placeholder": "Unit(Month)" }, "masterAutoRenew": { "label": "Auto Renewal", "placeholder": "Enable" }, "masterAutoRenewPeriod": { "label": "Auto Renewal Duration", "placeholder": "Unit(Month)" }, "platform": { "label": "Operating System" }, "accessKeyId": { "label": "Access Key", "placeholder": "Your Aliyun access key", "required": "Access Key is required" }, "accessKeySecret": { "label": "Secret Key", "placeholder": "Your Aliyun secret key", "provided": "Provided", "required": "Secret Key is required" }, "version": { "label": "Kubernetes Version" }, "zoneId": { "label": "Availability Zone", "required": "Availability Zone is required" }, "instanceType": { "label": "Instance Type", "required": "Instance Type is required" } } } },
-  'zh-hans': { "clusterNew": { "aliyunkcs": { "label": "阿里云Kubernetes容器服务", "shortLabel": "Alibaba ACK", "access": { "next": "下一步: 配置集群", "loading": "从Alibaba ACK加载可用区域", "title": "帐户访问", "detail": "选择将用于启动阿里巴巴Kubernetes服务的地区和API密钥" }, "clusterSelect": { "title": "选择集群", "detail": "选择要注册的 ACK 集群", "next": "注册集群", "importCluster": "集群", "required": "必须设置需要导入的集群", "placeholder": "请选择" }, "cluster": { "title": "集群配置", "detail": "选择将用于启动阿里巴巴Kubernetes服务的区域和Kubernetes版本", "next": "下一步: 配置Master节点", "loading": "从Alibaba加载可用区域", "name": { "required": "集群名称必须输入" } }, "clusters": { "k8s": "专有Kubernetes", "managed": "托管Kubernetes", "label": "集群类型" }, "master": { "title": "Master 节点", "detail": "配置用于启动阿里巴巴Kubernetes服务的主节点", "next": "下一步: 配置Worker节点", "loading": "从阿里巴巴加载密钥对" }, "worker": { "title": "Worker 节点", "detail": "配置用于启动阿里巴巴Kubernetes服务的工作节点", "required": "Worker 节点必须配置" }, "disk": { "cloud": "普通云盘", "ephemeralSsd": "本地SSD盘", "efficiency": "高效云盘", "ssd": "SSD 云盘", "essd": "ESSD 云盘" }, "rootSize": { "label": "根磁盘大小", "placeholder": "例如: 120" }, "rootType": { "label": "根磁盘类型", "required": "根磁盘类型必须配置" }, "storageType": { "label": "数据磁盘类型", "required": "数据磁盘类型必须配置" }, "storageSize": { "label": "数据磁盘大小", "placeholder": "例如: 120" }, "masterNum": { "label": "Master 节点数", "help": "此Kubernetes集群将运行的Master节点数" }, "nodePoolName": { "label": "节点池名称", "placeholder": "e.g. nodepool", "required": "必须设置worker节点池名称" }, "numOfNodes": { "label": "Worker 节点数", "placeholder": "例如: 3", "required": "必须设置Worker节点", "help": "此Kubernetes集群将运行的Worker节点数" }, "keyPair": { "label": "密钥对", "required": "必须选择密钥对" }, "resourceGroup": { "label": "资源组", "all": "账号全部资源" }, "region": { "label": "区域" }, "vpcId": { "label": "专有网络", "prompt": "选择专有网络...", "required": "必须选择专有网络", "default": "默认专有网络" }, "vswitchId": { "label": "交换机", "prompt": "选择交换机...", "required": "必须选择交换机", "default": "默认交换机" }, "proxyMode": { "label": "kube-proxy 代理模式" }, "containerCidr": { "label": "Pod 网络 CIDR", "required": "必须输入Pod 网络 CIDR", "invalid": "Pod 网络 CIDR 网段格式不合法", "placeholder": "请填写有效的私有网段，即以下网段及其子网：10.0.0.0/8，172.16-31.0.0/12-16，192.168.0.0/16。不能与VPC及VPC内已有kubernetes集群使用的网段重复" }, "serviceCidr": { "label": "Service CIDR", "required": "必须输入Service CIDR", "invalid": "Service CIDR 网段不可选", "placeholder": "可选范围：10.0.0.0/16-24，172.16-31.0.0/16-24，192.168.0.0/16-24。不能与VPC及VPC内已有kubernetes集群使用的网段重复" }, "nodeCidrMask": { "label": "节点 IP 数量" }, "snatEntry": { "label": "配置 SNAT", "placeholder": "为专有网络配置 SNAT" }, "endpointPublicAccess": { "label": "公网访问", "placeholder": "使用 EIP 暴露 API Server" }, "masterInstanceChargeType": { "label": "付费类型", "prePaid": "包年包月", "postPaid": "按量付费" }, "masterPeriod": { "label": "购买时长", "placeholder": "单位(月)" }, "masterAutoRenew": { "label": "自动续费", "placeholder": "开启" }, "masterAutoRenewPeriod": { "label": "自动续费时长", "placeholder": "单位(月)" }, "platform": { "label": "操作系统" }, "accessKeyId": { "label": "访问秘钥", "placeholder": "请输入你的访问秘钥", "required": "访问秘钥必须输入" }, "accessKeySecret": { "label": "访问秘钥令牌", "placeholder": "请输入你的访问秘钥令牌", "provided": "Provided", "required": "访问秘钥令牌必须输入" }, "version": { "label": "Kubernetes版本" }, "zoneId": { "label": "可用区域", "required": "可用区域必须设置" }, "instanceType": { "label": "实例类型", "required": "实例类型必须设置" } } } },
-  'zh-hant': {"clusterNew":{"aliyunkcs":{"label":"阿里雲Kubernetes容器服務","shortLabel":"Alibaba ACK","access":{"next":"下一步: 配置集群","loading":"從Alibaba ACK加載可用區域","title":"帳戶訪問","detail":"選擇將用於啟動阿里巴巴Kubernetes服務的地區和API密鑰"},"clusterSelect":{"title":"選擇集群","detail":"選擇要註冊的 ACK 集群","next":"註冊集群","importCluster":"集群","required":"必須設置需要導入的集群","placeholder":"請選擇"},"cluster":{"title":"集群配置","detail":"選擇將用於啟動阿里巴巴Kubernetes服務的區域和Kubernetes版本","next":"下一步: 配置Master節點","loading":"從Alibaba加載可用區域","name":{"required":"集群名稱必須輸入"}},"clusters":{"k8s":"專有Kubernetes","managed":"託管Kubernetes","label":"集群類型"},"master":{"title":"Master 節點","detail":"配置用於啟動阿里巴巴Kubernetes服務的主節點","next":"下一步: 配置Worker節點","loading":"從阿里巴巴加載密鑰對"},"worker":{"title":"Worker 節點","detail":"配置用於啟動阿里巴巴Kubernetes服務的工作節點","required":"Worker 節點必須配置"},"disk":{"cloud":"普通雲盤","ephemeralSsd":"本地SSD盤","efficiency":"高效雲盤","ssd":"SSD 雲盤","essd":"ESSD 雲盤"},"rootSize":{"label":"根磁盤大小","placeholder":"例如: 120"},"rootType":{"label":"根磁盤類型","required":"根磁盤類型必須配置"},"storageType":{"label":"數據磁盤類型","required":"數據磁盤類型必須配置"},"storageSize":{"label":"數據磁盤大小","placeholder":"例如: 120"},"masterNum":{"label":"Master 節點數","help":"此Kubernetes集群將運行的Master節點數"},"nodePoolName":{"label":"節點池名稱","placeholder":"e.g. nodepool","required":"必須設置worker節點池名稱"},"numOfNodes":{"label":"Worker 節點數","placeholder":"例如: 3","required":"必須設置Worker節點","help":"此Kubernetes集群將運行的Worker節點數"},"keyPair":{"label":"密鑰對","required":"必須選擇密鑰對"},"resourceGroup":{"label":"資源組","all":"賬號全部資源"},"region":{"label":"區域"},"vpcId":{"label":"專有網絡","prompt":"選擇專有網絡...","required":"必須選擇專有網絡","default":"默認專有網絡"},"vswitchId":{"label":"交換機","prompt":"選擇交換機...","required":"必須選擇交換機","default":"默認交換機"},"proxyMode":{"label":"kube-proxy 代理模式"},"containerCidr":{"label":"Pod 網絡 CIDR","required":"必須輸入Pod 網絡 CIDR","invalid":"Pod 網絡 CIDR 網段格式不合法","placeholder":"請填寫有效的私有網段，即以下網段及其子網：10.0.0.0/8，172.16-31.0.0/12-16，192.168.0.0/16。不能與VPC及VPC內已有kubernetes集群使用的網段重複"},"serviceCidr":{"label":"Service CIDR","required":"必須輸入Service CIDR","invalid":"Service CIDR 網段不可選","placeholder":"可選範圍：10.0.0.0/16-24，172.16-31.0.0/16-24，192.168.0.0/16-24。不能與VPC及VPC內已有kubernetes集群使用的網段重複"},"nodeCidrMask":{"label":"節點 IP 數量"},"snatEntry":{"label":"配置 SNAT","placeholder":"為專有網絡配置 SNAT"},"endpointPublicAccess":{"label":"公網訪問","placeholder":"使用 EIP 暴露 API Server"},"masterInstanceChargeType":{"label":"付費類型","prePaid":"包年包月","postPaid":"按量付費"},"masterPeriod":{"label":"購買時長","placeholder":"單位(月)"},"masterAutoRenew":{"label":"自動續費","placeholder":"開啟"},"masterAutoRenewPeriod":{"label":"自動續費時長","placeholder":"單位(月)"},"platform":{"label":"操作系統"},"accessKeyId":{"label":"訪問秘鑰","placeholder":"請輸入你的訪問秘鑰","required":"訪問秘鑰必須輸入"},"accessKeySecret":{"label":"訪問秘鑰令牌","placeholder":"請輸入你的訪問秘鑰令牌","provided":"Provided","required":"訪問秘鑰令牌必須輸入"},"version":{"label":"Kubernetes版本"},"zoneId":{"label":"可用區域","required":"可用區域必須設置"},"instanceType":{"label":"實例類型","required":"實例類型必須設置"}}}},
-  'zh-hant-tw': {"clusterNew":{"aliyunkcs":{"label":"阿里雲Kubernetes容器服務","shortLabel":"Alibaba ACK","access":{"next":"下一步: 配置叢集","loading":"從Alibaba ACK載入可用區域","title":"帳戶訪問","detail":"選擇將用於啟動阿里巴巴Kubernetes服務的地區和API密鑰"},"clusterSelect":{"title":"選擇叢集","detail":"選擇要註冊的 ACK 叢集","next":"註冊叢集","importCluster":"叢集","required":"必須設置需要導入的叢集","placeholder":"請選擇"},"cluster":{"title":"叢集配置","detail":"選擇將用於啟動阿里巴巴Kubernetes服務的區域和Kubernetes版本","next":"下一步: 配置Master節點","loading":"從Alibaba載入可用區域","name":{"required":"叢集名稱必須輸入"}},"clusters":{"k8s":"專有Kubernetes","managed":"託管Kubernetes","label":"叢集類型"},"master":{"title":"Master 節點","detail":"配置用於啟動阿里巴巴Kubernetes服務的主節點","next":"下一步: 配置Worker節點","loading":"從阿里巴巴載入密鑰對"},"worker":{"title":"Worker 節點","detail":"配置用於啟動阿里巴巴Kubernetes服務的工作節點","required":"Worker 節點必須配置"},"disk":{"cloud":"普通雲盤","ephemeralSsd":"本地SSD盤","efficiency":"高效雲盤","ssd":"SSD 雲盤","essd":"ESSD 雲盤"},"rootSize":{"label":"根磁碟大小","placeholder":"例如: 120"},"rootType":{"label":"根磁碟類型","required":"根磁碟類型必須配置"},"storageType":{"label":"數據磁碟類型","required":"數據磁碟類型必須配置"},"storageSize":{"label":"數據磁碟大小","placeholder":"例如: 120"},"masterNum":{"label":"Master 節點數","help":"此Kubernetes叢集將運行的Master節點數"},"nodePoolName":{"label":"節點池名稱","placeholder":"e.g. nodepool","required":"必須設置worker節點池名稱"},"numOfNodes":{"label":"Worker 節點數","placeholder":"例如: 3","required":"必須設置Worker節點","help":"此Kubernetes叢集將運行的Worker節點數"},"keyPair":{"label":"密鑰對","required":"必須選擇密鑰對"},"resourceGroup":{"label":"資源組","all":"賬號全部資源"},"region":{"label":"區域"},"vpcId":{"label":"專有網路","prompt":"選擇專有網路...","required":"必須選擇專有網路","default":"默認專有網路"},"vswitchId":{"label":"交換機","prompt":"選擇交換機...","required":"必須選擇交換機","default":"默認交換機"},"proxyMode":{"label":"kube-proxy 代理模式"},"containerCidr":{"label":"Pod 網路 CIDR","required":"必須輸入Pod 網路 CIDR","invalid":"Pod 網路 CIDR 網段格式不合法","placeholder":"請填寫有效的私有網段，即以下網段及其子網：10.0.0.0/8，172.16-31.0.0/12-16，192.168.0.0/16。不能與VPC及VPC內已有kubernetes叢集使用的網段重複"},"serviceCidr":{"label":"Service CIDR","required":"必須輸入Service CIDR","invalid":"Service CIDR 網段不可選","placeholder":"可選範圍：10.0.0.0/16-24，172.16-31.0.0/16-24，192.168.0.0/16-24。不能與VPC及VPC內已有kubernetes叢集使用的網段重複"},"nodeCidrMask":{"label":"節點 IP 數量"},"snatEntry":{"label":"配置 SNAT","placeholder":"為專有網路配置 SNAT"},"endpointPublicAccess":{"label":"公網訪問","placeholder":"使用 EIP 暴露 API Server"},"masterInstanceChargeType":{"label":"付費類型","prePaid":"包年包月","postPaid":"按量付費"},"masterPeriod":{"label":"購買時長","placeholder":"單位(月)"},"masterAutoRenew":{"label":"自動續費","placeholder":"開啟"},"masterAutoRenewPeriod":{"label":"自動續費時長","placeholder":"單位(月)"},"platform":{"label":"操作系統"},"accessKeyId":{"label":"訪問秘鑰","placeholder":"請輸入你的訪問秘鑰","required":"訪問秘鑰必須輸入"},"accessKeySecret":{"label":"訪問秘鑰令牌","placeholder":"請輸入你的訪問秘鑰令牌","provided":"Provided","required":"訪問秘鑰令牌必須輸入"},"version":{"label":"Kubernetes版本"},"zoneId":{"label":"可用區域","required":"可用區域必須設置"},"instanceType":{"label":"實例類型","required":"實例類型必須設置"}}}},
+  'en-us': { "clusterNew": { "aliyunkcs": { "label": "Aliyun Kubernetes Container Service", "shortLabel": "Alibaba ACK", "access": { "next": "Next: Configure Cluster", "loading": "Loading Zones from Alibaba ACK", "title": "Account Access", "detail": "Choose the region and API Key that will be used to launch Alibaba Kubernetes Service", "nodePoolUpdateError": "The node pool is being created and cannot be upgraded. Please try again later." }, "clusterSelect": { "title": "Select Cluster", "detail": "Select the ACK cluster you want to register", "next": "Register Cluster", "importCluster": "Cluster", "required": "Import Cluster is required", "placeholder": "Choose" }, "cluster": { "title": "Cluster Configuration", "detail": "Choose the Zone and Kubernetes version that will be used to launch Alibaba Kubernetes Service", "next": "Next: Configure Master Nodes", "loading": "Loading Availability Zones from Alibaba", "name": { "required": "Cluster name is required" } }, "clusters": { "k8s": "Dedicated Kubernetes", "managed": "Managed Kubernetes", "label": "Cluster Type" }, "master": { "title": "Master Nodes", "detail": "Configure the master nodes that will be used to launch Alibaba Kubernetes Service", "next": "Next: Configure Worker Nodes", "loading": "Loading Key Pairs from Alibaba" }, "worker": { "title": "Worker Nodes", "detail": "Configure the worker nodes that will be used to launch Alibaba Kubernetes Service", "required": "Worker Nodes is required" }, "disk": { "cloud": "Ordinary Disk", "ephemeralSsd": "Local SSD Disk", "efficiency": "Ultra Disk", "ssd": "SSD Disk", "essd": "ESSD Disk" }, "rootSize": { "label": "Root Disk Size", "placeholder": "e.g. 120" }, "rootType": { "label": "Root Disk Type", "required": "Root Disk Type is required" }, "storageType": { "label": "Data Disk Type", "required": "Data Disk Type is required" }, "storageSize": { "label": "Data Disk Size", "placeholder": "e.g. 120" }, "masterNum": { "label": "Master Nodes Count", "help": "The count of master nodes will be launched in this Kubernetes cluster" }, "nodePoolName": { "label": "Nood Pool Name", "placeholder": "e.g. nodepool", "required": "Worker Node Name is required" }, "numOfNodes": { "label": "Worker Nodes Count", "placeholder": "e.g. 3", "required": "Worker Nodes Count is required", "help": "The count of worker nodes will be launched in this Kubernetes cluster" }, "keyPair": { "label": "Key Pair", "required": "Key Pair is required" }, "resourceGroup": { "label": "Resource Group", "all": "Account's all Resources" }, "region": { "label": "Region" }, "vpcId": { "label": "VPC", "prompt": "Choose VPC...", "required": "VPC is required", "default": "Default VPC" }, "vswitchId": { "label": "VSwitch", "prompt": "Choose VSwitch...", "required": "VSwitch is required", "default": "Default VSwitch" }, "proxyMode": { "label": "Kube-Proxy Mode" }, "containerCidr": { "label": "Pod CIDR Block", "required": "Pod CIDR Block is required", "invalid": "Pod CIDR Block is invalid", "placeholder": "Specify a valid CIDR block that contains only internal IP addresses, namely one of the following CIDR blocks or their subnets: 10.0.0.0/8 172.16-31.0.0/12-16 and 192.168.0.0/16.Cannot be duplicated with the VPC and the network segment used by the existing kubernetes cluster in the VPC" }, "serviceCidr": { "label": "Service CIDR", "required": "Service CIDR is required", "invalid": "Service CIDR is invalid", "placeholder": "Valid CIDR blocks include: 10.0.0.0/8 172.16-31.0.0/12-16 and 192.168.0.0/16.Cannot be duplicated with the VPC and the network segment used by the existing kubernetes cluster in the VPC" }, "nodeCidrMask": { "label": "IP Addresses per Node" }, "snatEntry": { "label": "Configure SNAT", "placeholder": "Configure SNAT for VPC" }, "endpointPublicAccess": { "label": "Public Access", "placeholder": "Expose API Server with EIP" }, "masterInstanceChargeType": { "label": "Billing Method", "prePaid": "Subscription", "postPaid": "Pay-As-You-Go" }, "masterPeriod": { "label": "Duration", "placeholder": "Unit(Month)" }, "masterAutoRenew": { "label": "Auto Renewal", "placeholder": "Enable" }, "masterAutoRenewPeriod": { "label": "Auto Renewal Duration", "placeholder": "Unit(Month)" }, "platform": { "label": "Operating System" }, "accessKeyId": { "label": "Access Key", "placeholder": "Your Aliyun access key", "required": "Access Key is required" }, "accessKeySecret": { "label": "Secret Key", "placeholder": "Your Aliyun secret key", "provided": "Provided", "required": "Secret Key is required" }, "version": { "label": "Kubernetes Version" }, "zoneId": { "label": "Availability Zone", "required": "Availability Zone is required" }, "instanceType": { "label": "Instance Type", "required": "Instance Type is required" } } } },
+  'zh-hans': { "clusterNew": { "aliyunkcs": { "label": "阿里云Kubernetes容器服务", "shortLabel": "Alibaba ACK", "access": { "next": "下一步: 配置集群", "loading": "从Alibaba ACK加载可用区域", "title": "帐户访问", "detail": "选择将用于启动阿里巴巴Kubernetes服务的地区和API密钥", 'nodePoolUpdateError': "节点池正在创建中，无法升级，请稍后再试。" }, "clusterSelect": { "title": "选择集群", "detail": "选择要注册的 ACK 集群", "next": "注册集群", "importCluster": "集群", "required": "必须设置需要导入的集群", "placeholder": "请选择" }, "cluster": { "title": "集群配置", "detail": "选择将用于启动阿里巴巴Kubernetes服务的区域和Kubernetes版本", "next": "下一步: 配置Master节点", "loading": "从Alibaba加载可用区域", "name": { "required": "集群名称必须输入" } }, "clusters": { "k8s": "专有Kubernetes", "managed": "托管Kubernetes", "label": "集群类型" }, "master": { "title": "Master 节点", "detail": "配置用于启动阿里巴巴Kubernetes服务的主节点", "next": "下一步: 配置Worker节点", "loading": "从阿里巴巴加载密钥对" }, "worker": { "title": "Worker 节点", "detail": "配置用于启动阿里巴巴Kubernetes服务的工作节点", "required": "Worker 节点必须配置" }, "disk": { "cloud": "普通云盘", "ephemeralSsd": "本地SSD盘", "efficiency": "高效云盘", "ssd": "SSD 云盘", "essd": "ESSD 云盘" }, "rootSize": { "label": "根磁盘大小", "placeholder": "例如: 120" }, "rootType": { "label": "根磁盘类型", "required": "根磁盘类型必须配置" }, "storageType": { "label": "数据磁盘类型", "required": "数据磁盘类型必须配置" }, "storageSize": { "label": "数据磁盘大小", "placeholder": "例如: 120" }, "masterNum": { "label": "Master 节点数", "help": "此Kubernetes集群将运行的Master节点数" }, "nodePoolName": { "label": "节点池名称", "placeholder": "e.g. nodepool", "required": "必须设置worker节点池名称" }, "numOfNodes": { "label": "Worker 节点数", "placeholder": "例如: 3", "required": "必须设置Worker节点", "help": "此Kubernetes集群将运行的Worker节点数" }, "keyPair": { "label": "密钥对", "required": "必须选择密钥对" }, "resourceGroup": { "label": "资源组", "all": "账号全部资源" }, "region": { "label": "区域" }, "vpcId": { "label": "专有网络", "prompt": "选择专有网络...", "required": "必须选择专有网络", "default": "默认专有网络" }, "vswitchId": { "label": "交换机", "prompt": "选择交换机...", "required": "必须选择交换机", "default": "默认交换机" }, "proxyMode": { "label": "kube-proxy 代理模式" }, "containerCidr": { "label": "Pod 网络 CIDR", "required": "必须输入Pod 网络 CIDR", "invalid": "Pod 网络 CIDR 网段格式不合法", "placeholder": "请填写有效的私有网段，即以下网段及其子网：10.0.0.0/8，172.16-31.0.0/12-16，192.168.0.0/16。不能与VPC及VPC内已有kubernetes集群使用的网段重复" }, "serviceCidr": { "label": "Service CIDR", "required": "必须输入Service CIDR", "invalid": "Service CIDR 网段不可选", "placeholder": "可选范围：10.0.0.0/16-24，172.16-31.0.0/16-24，192.168.0.0/16-24。不能与VPC及VPC内已有kubernetes集群使用的网段重复" }, "nodeCidrMask": { "label": "节点 IP 数量" }, "snatEntry": { "label": "配置 SNAT", "placeholder": "为专有网络配置 SNAT" }, "endpointPublicAccess": { "label": "公网访问", "placeholder": "使用 EIP 暴露 API Server" }, "masterInstanceChargeType": { "label": "付费类型", "prePaid": "包年包月", "postPaid": "按量付费" }, "masterPeriod": { "label": "购买时长", "placeholder": "单位(月)" }, "masterAutoRenew": { "label": "自动续费", "placeholder": "开启" }, "masterAutoRenewPeriod": { "label": "自动续费时长", "placeholder": "单位(月)" }, "platform": { "label": "操作系统" }, "accessKeyId": { "label": "访问秘钥", "placeholder": "请输入你的访问秘钥", "required": "访问秘钥必须输入" }, "accessKeySecret": { "label": "访问秘钥令牌", "placeholder": "请输入你的访问秘钥令牌", "provided": "Provided", "required": "访问秘钥令牌必须输入" }, "version": { "label": "Kubernetes版本" }, "zoneId": { "label": "可用区域", "required": "可用区域必须设置" }, "instanceType": { "label": "实例类型", "required": "实例类型必须设置" } } } },
+  'zh-hant': {"clusterNew":{"aliyunkcs":{"label":"阿里雲Kubernetes容器服務","shortLabel":"Alibaba ACK","access":{"next":"下一步: 配置集群","loading":"從Alibaba ACK加載可用區域","title":"帳戶訪問","detail":"選擇將用於啟動阿里巴巴Kubernetes服務的地區和API密鑰", "nodePoolUpdateError": "節點池正在創建中，無法升級，請稍後再試。"},"clusterSelect":{"title":"選擇集群","detail":"選擇要註冊的 ACK 集群","next":"註冊集群","importCluster":"集群","required":"必須設置需要導入的集群","placeholder":"請選擇"},"cluster":{"title":"集群配置","detail":"選擇將用於啟動阿里巴巴Kubernetes服務的區域和Kubernetes版本","next":"下一步: 配置Master節點","loading":"從Alibaba加載可用區域","name":{"required":"集群名稱必須輸入"}},"clusters":{"k8s":"專有Kubernetes","managed":"託管Kubernetes","label":"集群類型"},"master":{"title":"Master 節點","detail":"配置用於啟動阿里巴巴Kubernetes服務的主節點","next":"下一步: 配置Worker節點","loading":"從阿里巴巴加載密鑰對"},"worker":{"title":"Worker 節點","detail":"配置用於啟動阿里巴巴Kubernetes服務的工作節點","required":"Worker 節點必須配置"},"disk":{"cloud":"普通雲盤","ephemeralSsd":"本地SSD盤","efficiency":"高效雲盤","ssd":"SSD 雲盤","essd":"ESSD 雲盤"},"rootSize":{"label":"根磁盤大小","placeholder":"例如: 120"},"rootType":{"label":"根磁盤類型","required":"根磁盤類型必須配置"},"storageType":{"label":"數據磁盤類型","required":"數據磁盤類型必須配置"},"storageSize":{"label":"數據磁盤大小","placeholder":"例如: 120"},"masterNum":{"label":"Master 節點數","help":"此Kubernetes集群將運行的Master節點數"},"nodePoolName":{"label":"節點池名稱","placeholder":"e.g. nodepool","required":"必須設置worker節點池名稱"},"numOfNodes":{"label":"Worker 節點數","placeholder":"例如: 3","required":"必須設置Worker節點","help":"此Kubernetes集群將運行的Worker節點數"},"keyPair":{"label":"密鑰對","required":"必須選擇密鑰對"},"resourceGroup":{"label":"資源組","all":"賬號全部資源"},"region":{"label":"區域"},"vpcId":{"label":"專有網絡","prompt":"選擇專有網絡...","required":"必須選擇專有網絡","default":"默認專有網絡"},"vswitchId":{"label":"交換機","prompt":"選擇交換機...","required":"必須選擇交換機","default":"默認交換機"},"proxyMode":{"label":"kube-proxy 代理模式"},"containerCidr":{"label":"Pod 網絡 CIDR","required":"必須輸入Pod 網絡 CIDR","invalid":"Pod 網絡 CIDR 網段格式不合法","placeholder":"請填寫有效的私有網段，即以下網段及其子網：10.0.0.0/8，172.16-31.0.0/12-16，192.168.0.0/16。不能與VPC及VPC內已有kubernetes集群使用的網段重複"},"serviceCidr":{"label":"Service CIDR","required":"必須輸入Service CIDR","invalid":"Service CIDR 網段不可選","placeholder":"可選範圍：10.0.0.0/16-24，172.16-31.0.0/16-24，192.168.0.0/16-24。不能與VPC及VPC內已有kubernetes集群使用的網段重複"},"nodeCidrMask":{"label":"節點 IP 數量"},"snatEntry":{"label":"配置 SNAT","placeholder":"為專有網絡配置 SNAT"},"endpointPublicAccess":{"label":"公網訪問","placeholder":"使用 EIP 暴露 API Server"},"masterInstanceChargeType":{"label":"付費類型","prePaid":"包年包月","postPaid":"按量付費"},"masterPeriod":{"label":"購買時長","placeholder":"單位(月)"},"masterAutoRenew":{"label":"自動續費","placeholder":"開啟"},"masterAutoRenewPeriod":{"label":"自動續費時長","placeholder":"單位(月)"},"platform":{"label":"操作系統"},"accessKeyId":{"label":"訪問秘鑰","placeholder":"請輸入你的訪問秘鑰","required":"訪問秘鑰必須輸入"},"accessKeySecret":{"label":"訪問秘鑰令牌","placeholder":"請輸入你的訪問秘鑰令牌","provided":"Provided","required":"訪問秘鑰令牌必須輸入"},"version":{"label":"Kubernetes版本"},"zoneId":{"label":"可用區域","required":"可用區域必須設置"},"instanceType":{"label":"實例類型","required":"實例類型必須設置"}}}},
+  'zh-hant-tw': {"clusterNew":{"aliyunkcs":{"label":"阿里雲Kubernetes容器服務","shortLabel":"Alibaba ACK","access":{"next":"下一步: 配置叢集","loading":"從Alibaba ACK載入可用區域","title":"帳戶訪問","detail":"選擇將用於啟動阿里巴巴Kubernetes服務的地區和API密鑰", "nodePoolUpdateError": "節點池正在創建中，無法升級，請稍後再試。"},"clusterSelect":{"title":"選擇叢集","detail":"選擇要註冊的 ACK 叢集","next":"註冊叢集","importCluster":"叢集","required":"必須設置需要導入的叢集","placeholder":"請選擇"},"cluster":{"title":"叢集配置","detail":"選擇將用於啟動阿里巴巴Kubernetes服務的區域和Kubernetes版本","next":"下一步: 配置Master節點","loading":"從Alibaba載入可用區域","name":{"required":"叢集名稱必須輸入"}},"clusters":{"k8s":"專有Kubernetes","managed":"託管Kubernetes","label":"叢集類型"},"master":{"title":"Master 節點","detail":"配置用於啟動阿里巴巴Kubernetes服務的主節點","next":"下一步: 配置Worker節點","loading":"從阿里巴巴載入密鑰對"},"worker":{"title":"Worker 節點","detail":"配置用於啟動阿里巴巴Kubernetes服務的工作節點","required":"Worker 節點必須配置"},"disk":{"cloud":"普通雲盤","ephemeralSsd":"本地SSD盤","efficiency":"高效雲盤","ssd":"SSD 雲盤","essd":"ESSD 雲盤"},"rootSize":{"label":"根磁碟大小","placeholder":"例如: 120"},"rootType":{"label":"根磁碟類型","required":"根磁碟類型必須配置"},"storageType":{"label":"數據磁碟類型","required":"數據磁碟類型必須配置"},"storageSize":{"label":"數據磁碟大小","placeholder":"例如: 120"},"masterNum":{"label":"Master 節點數","help":"此Kubernetes叢集將運行的Master節點數"},"nodePoolName":{"label":"節點池名稱","placeholder":"e.g. nodepool","required":"必須設置worker節點池名稱"},"numOfNodes":{"label":"Worker 節點數","placeholder":"例如: 3","required":"必須設置Worker節點","help":"此Kubernetes叢集將運行的Worker節點數"},"keyPair":{"label":"密鑰對","required":"必須選擇密鑰對"},"resourceGroup":{"label":"資源組","all":"賬號全部資源"},"region":{"label":"區域"},"vpcId":{"label":"專有網路","prompt":"選擇專有網路...","required":"必須選擇專有網路","default":"默認專有網路"},"vswitchId":{"label":"交換機","prompt":"選擇交換機...","required":"必須選擇交換機","default":"默認交換機"},"proxyMode":{"label":"kube-proxy 代理模式"},"containerCidr":{"label":"Pod 網路 CIDR","required":"必須輸入Pod 網路 CIDR","invalid":"Pod 網路 CIDR 網段格式不合法","placeholder":"請填寫有效的私有網段，即以下網段及其子網：10.0.0.0/8，172.16-31.0.0/12-16，192.168.0.0/16。不能與VPC及VPC內已有kubernetes叢集使用的網段重複"},"serviceCidr":{"label":"Service CIDR","required":"必須輸入Service CIDR","invalid":"Service CIDR 網段不可選","placeholder":"可選範圍：10.0.0.0/16-24，172.16-31.0.0/16-24，192.168.0.0/16-24。不能與VPC及VPC內已有kubernetes叢集使用的網段重複"},"nodeCidrMask":{"label":"節點 IP 數量"},"snatEntry":{"label":"配置 SNAT","placeholder":"為專有網路配置 SNAT"},"endpointPublicAccess":{"label":"公網訪問","placeholder":"使用 EIP 暴露 API Server"},"masterInstanceChargeType":{"label":"付費類型","prePaid":"包年包月","postPaid":"按量付費"},"masterPeriod":{"label":"購買時長","placeholder":"單位(月)"},"masterAutoRenew":{"label":"自動續費","placeholder":"開啟"},"masterAutoRenewPeriod":{"label":"自動續費時長","placeholder":"單位(月)"},"platform":{"label":"操作系統"},"accessKeyId":{"label":"訪問秘鑰","placeholder":"請輸入你的訪問秘鑰","required":"訪問秘鑰必須輸入"},"accessKeySecret":{"label":"訪問秘鑰令牌","placeholder":"請輸入你的訪問秘鑰令牌","provided":"Provided","required":"訪問秘鑰令牌必須輸入"},"version":{"label":"Kubernetes版本"},"zoneId":{"label":"可用區域","required":"可用區域必須設置"},"instanceType":{"label":"實例類型","required":"實例類型必須設置"}}}},
 };
 
 
@@ -358,7 +358,7 @@ export default Ember.Component.extend(ClusterDriver, {
           osType:                   'Linux',
           resourceGroupId:          '',
         });
-        
+
         set(this, 'nodePoolList', [{...DEFAULT_NODE_GROUP_CONFIG, size: null, category: null}])
       }
 
@@ -423,23 +423,22 @@ export default Ember.Component.extend(ClusterDriver, {
 
       try {
         await all([this.fetchResourceGroups(), this.fetchRegions()]);
-        if(this.isImportProvider && this.isNew){
+
+        this.regionDidChange();
+
+        if(this.isImportProvider){
           set(this, 'step', 1.5);
+          cb && cb(true);
+        }else if (this.editing){
+          this.getConfigWorkerChoices(cb);
         }else{
           set(this, 'step', 2);
+          cb && cb(true);
         }
-
-        if(this.editing){
-          this.getConfigWorkerChoices();
-        }
-        cb && cb(true);
-        this.regionDidChange();
       } catch (e) {
         errors.push(get(e, 'body.Message') || e);
         set(this, 'errors', errors);
         cb && cb();
-
-        return;
       }
     },
 
@@ -516,7 +515,6 @@ export default Ember.Component.extend(ClusterDriver, {
       const errors = get(this, 'errors') || [];
       const intl = get(this, 'intl');
 
-      const keyPair = get(this, 'config.keyPair');
       const nodePoolList = get(this, 'nodePoolList');
 
       const clusterName = get(this, 'cluster.name');
@@ -530,10 +528,6 @@ export default Ember.Component.extend(ClusterDriver, {
         errors.push(intl.t('clusterNew.aliyunkcs.cluster.name.required'));
       }
 
-      if ( !keyPair ) {
-        errors.push(intl.t('clusterNew.aliyunkcs.keyPair.required'));
-      }
-
       if ( !config.aliyun_credential_secret ) {
         errors.push(intl.t('nodeDriver.cloudCredentialError'));
       }
@@ -542,6 +536,15 @@ export default Ember.Component.extend(ClusterDriver, {
         set(config, 'node_pool_list', this.formatNodePoolList(nodePoolList, errors))
       } else {
         errors.push(intl.t('clusterNew.aliyunkcs.worker.required'));
+      }
+
+      const defaultNodePool = get(config, 'node_pool_list').find(item=>item.name === 'default-nodepool') || {} ;
+      const keyPair = defaultNodePool.key_pair || get(this, 'config.keyPair');
+
+      if(!keyPair){
+        errors.push(intl.t('clusterNew.aliyunkcs.keyPair.required'));
+      }else{
+        set(config, 'keyPair', keyPair);
       }
 
       if (errors.length > 0) {
@@ -565,7 +568,7 @@ export default Ember.Component.extend(ClusterDriver, {
       setProperties(this, { 'errors': null });
 
       const errors = get(this, 'errors') || [];
-      
+
       set(this, 'config.imported', true);
       set(this, 'config.cluster_name', get(this, 'config.name'));
       set(this, 'config.aliyun_credential_secret', get(this, 'primaryResource.cloudCredentialId'));
@@ -583,14 +586,14 @@ export default Ember.Component.extend(ClusterDriver, {
 
         return;
       }
-      
+
       set(this, 'cluster.ackConfig', get(this, 'config'));
       this.send('driverSave', cb);
     },
     addNodePool() {
       let nodePoolList = get(this, 'nodePoolList');
       const ngConfig = {
-        ...DEFAULT_NODE_GROUP_CONFIG, 
+        ...DEFAULT_NODE_GROUP_CONFIG,
         instance_types: get(this, 'instanceChoices.firstObject.value'),
         name:    '',
       };
@@ -645,15 +648,11 @@ export default Ember.Component.extend(ClusterDriver, {
     });
   }),
 
-  resourceGroupIdDidChange: observer('config.resourceGroupId', function() {
-    this.regionDidChange();
-  }),
-
   regionChoicesShouldChange: observer('intl.locale', async function() {
     await this.fetchRegions();
   }),
 
-  regionDidChange: observer('config.regionId', function() {
+  regionDidChange: observer('config.regionId', 'config.resourceGroupId', function() {
     const region = get(this, 'config.regionId');
 
     set(this, 'regionId', region)
@@ -847,19 +846,21 @@ export default Ember.Component.extend(ClusterDriver, {
   }),
 
   platformTypeDidChange: observer('config.platform', function() {
-    const osType = get(this, 'platformChoices').find((item) => item.value === get(this, 'config.platform'));
+    const platform = get(this, 'platformChoices').find((item) => item.value === get(this, 'config.platform'));
 
-    set(this, 'config.osType', osType);
+    set(this, 'config.osType', platform.osType || 'Linux');
   }),
 
   masterInstanceTypeDidChange: observer('masterInstanceType', function() {
     const type = get(this, 'masterInstanceType');
     const inst = get(this, 'instanceChoices').findBy('value', type) || {};
     if (inst.systemDisk && inst.systemDisk.length) {
-      set(this, 'systemDiskChoices', systemDisk);
+      set(this, 'systemDiskChoices', inst.systemDisk);
 
       if(!get(inst, 'systemDisk').findBy('value', get(this, 'config.masterSystemDiskCategory'))){
-        set(this, 'config.masterSystemDiskCategory', null);
+        const firstValue = get(inst.systemDisk, 'firstObject.value');
+
+        set(this, 'config.masterSystemDiskCategory', firstValue || null);
       }
     } else {
       this.fetchAvailableSystemDisks('master');
@@ -877,7 +878,9 @@ export default Ember.Component.extend(ClusterDriver, {
         set(nodePool, 'systemDisk', inst.systemDisk);
 
         if(!get(inst, 'systemDisk').findBy('value', get(nodePool, 'system_disk_category'))){
-          set(nodePool, 'system_disk_category', null);
+          const firstValue = get(inst.systemDisk, 'firstObject.value')
+
+          set(nodePool, 'system_disk_category', firstValue || null);
         }
       } else {
         this.fetchAvailableSystemDisks('worker', nodePool);
@@ -886,12 +889,23 @@ export default Ember.Component.extend(ClusterDriver, {
       if (inst.dataDisk && inst.dataDisk.length) {
         set(nodePool, 'dataDisk', inst.dataDisk);
 
-        if(!get(inst, 'dataDisk').findBy('value', get(nodePool, 'category'))){
-          set(nodePool, 'category', null);
+        const found = get(inst, 'dataDisk').findBy('value', get(nodePool, 'category'));
+
+        if(!found){
+          const firstValue = get(inst.dataDisk, 'firstObject.value');
+
+          set(nodePool, 'category', firstValue || null);
         }
       } else {
         this.fetchAvailabelDataDisks(nodePool);
       }
+    })
+  }),
+
+  nodePoolActive: computed('config.node_pool_list.@each.{nodepool_id}', function() {
+    const list = get(this, 'config.node_pool_list') || [];
+    return list.every(item=>{
+      return item.nodepool_id;
     })
   }),
 
@@ -942,23 +956,23 @@ export default Ember.Component.extend(ClusterDriver, {
     return Math.pow(2, (32 - mask));
   }),
 
-  vpcShowValue: computed('intl.locale', 'config.vpcId', 'vpcs', function() {
+  vpcShowValue: computed('intl.locale', 'config.vpcId', 'vpcs.[]', function() {
     const vpcs = get(this, 'vpcs');
 
     if (vpcs && get(this, 'config.vpcId')) {
       return get(vpcs.findBy('value', get(this, 'config.vpcId')), 'label');
     } else {
-      return '';
+      return get(this, 'config.vpcId') || '';
     }
   }),
 
-  vswitchShowValue: computed('intl.locale', 'vswitchId', 'vswitches', function() {
+  vswitchShowValue: computed('intl.locale', 'vswitchId', 'vswitches.[]', function() {
     const vswitches = get(this, 'vswitches');
 
     if (vswitches && get(this, 'vswitchId')) {
       return get(vswitches.findBy('value', get(this, 'vswitchId')), 'label');
     } else {
-      return '';
+      return get(this, 'vswitchId') || '';
     }
   }),
 
@@ -1225,7 +1239,9 @@ export default Ember.Component.extend(ClusterDriver, {
         const found = systemDisk.findBy('value', selectedDisk);
 
         if (!found) {
-          type === 'master' ? set(this, `config.masterSystemDiskCategory`, null) : set(nodePool, `system_disk_category`, null);
+          const firstValue = get(systemDisk, 'firstObject.value');
+
+          type === 'master' ? set(this, `config.masterSystemDiskCategory`, firstValue || null) : set(nodePool, `system_disk_category`, firstValue || null);
         }
       }
     });
@@ -1249,7 +1265,7 @@ export default Ember.Component.extend(ClusterDriver, {
         destinationResource:  'DataDisk'
       }).then((res) => {
         results = this.getAvailableResources(res);
-        
+
         const dataDiskChoices = results.map((item) => {
           let disk = DISKS.find(disk => disk.value === item);
           if (disk === undefined) {
@@ -1264,7 +1280,9 @@ export default Ember.Component.extend(ClusterDriver, {
 
         set(nodePool, 'dataDisk', dataDiskChoices);
         if(!dataDiskChoices.findBy('value', get(nodePool, 'category'))){
-          set(nodePool, 'category', null);
+          const firstValue = get(dataDiskChoices, 'firstObject.value');
+
+          set(nodePool, 'category', firstValue || null);
         }
 
         resolve(results);
@@ -1298,30 +1316,26 @@ export default Ember.Component.extend(ClusterDriver, {
     const containerCidr = get(this, 'config.containerCidr');
     const segment = containerCidr.split('/')[0];
     const subnet  = containerCidr.split('/')[1];
-
-    if (segment === '10.0.0.0') {
-      return (parseInt(subnet) >= 7 && parseInt(subnet) <= 22);
-    }
-
-    if (segment === '192.168.0.0') {
-      return (parseInt(subnet) >= 13 && parseInt(subnet) <= 22);
-    }
-
     const segmentSplit = segment.split('.');
+
+    if (segmentSplit[0] === '10') {
+      return (parseInt(subnet) >= 8 && parseInt(subnet) <= 32);
+    }
+
+    if (segmentSplit[0] === '192' && segmentSplit[1] === '168') {
+      return (parseInt(subnet) >= 16 && parseInt(subnet) <= 32);
+    }
 
     if (segmentSplit[0] === '172') {
       if (!(parseInt(segmentSplit[1]) >= 16 && parseInt(segmentSplit[1]) <= 31)) {
         return false;
       }
-      if (!(segmentSplit[2] === '0' && segmentSplit[3] === '0')) {
+
+      if (!(parseInt(subnet) >= 12 && parseInt(subnet) <= 16)) {
         return false;
       }
-      if (segmentSplit[1] === '16' && (parseInt(subnet) >= 12 && parseInt(subnet) <= 22)) {
-        return true;
-      }
-      if (parseInt(segmentSplit[1]) > 16 && (parseInt(subnet) >= 16 && parseInt(subnet) <= 22)) {
-        return true;
-      }
+
+      return true;
     }
 
     return false;
@@ -1331,16 +1345,16 @@ export default Ember.Component.extend(ClusterDriver, {
     const containerCidr = get(this, 'config.serviceCidr');
     const segment = containerCidr.split('/')[0];
     const subnet  = containerCidr.split('/')[1];
-
-    if (segment === '10.0.0.0') {
-      return (parseInt(subnet) >= 16 && parseInt(subnet) <= 24);
-    }
-
-    if (segment === '192.168.0.0') {
-      return (parseInt(subnet) >= 16 && parseInt(subnet) <= 24);
-    }
-
     const segmentSplit = segment.split('.');
+
+
+    if (segmentSplit[0] === '10') {
+      return (parseInt(subnet) >= 16 && parseInt(subnet) <= 24);
+    }
+
+    if (segmentSplit[0] === '192' && segmentSplit[1] === '168') {
+      return (parseInt(subnet) >= 16 && parseInt(subnet) <= 24);
+    }
 
     if (segmentSplit[0] === '172') {
       if (!(parseInt(segmentSplit[1]) >= 16 && parseInt(segmentSplit[1]) <= 31)) {
@@ -1371,8 +1385,7 @@ export default Ember.Component.extend(ClusterDriver, {
       acceptLanguage = 'en-US';
     };
 
-    const cloudCredentialId = get(this, 'primaryResource.cloudCredentialId')
-    
+    const cloudCredentialId = get(this, 'primaryResource.cloudCredentialId');
     const results = [];
     const location = window.location;
     let req = {};
@@ -1393,7 +1406,7 @@ export default Ember.Component.extend(ClusterDriver, {
 
     return new EmberPromise((resolve, reject) => {
       if(!cloudCredentialId){
-        console.error(`${resourceName}: "cloudCredentialId" not found`)
+        // console.error(`${resourceName}: "cloudCredentialId" not found`)
         return resolve(results);
       }
       get(this, 'globalStore').rawRequest(req).then((res) => {
@@ -1498,7 +1511,7 @@ export default Ember.Component.extend(ClusterDriver, {
     if(!category){
       return '';
     }
-    
+
     const intl = get(this, 'intl');
     const disk = DISKS.findBy('value', category);
 

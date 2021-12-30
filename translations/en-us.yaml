@@ -7,6 +7,7 @@ clusterNew:
       loading: "Loading Zones from Alibaba ACK"
       title: Account Access
       detail: Choose the region and API Key that will be used to launch Alibaba Kubernetes Service
+      nodePoolUpdateError: The node pool is being created and cannot be upgraded. Please try again later.
     clusterSelect:
       title: Select Cluster
       detail: Select the ACK cluster you want to register
