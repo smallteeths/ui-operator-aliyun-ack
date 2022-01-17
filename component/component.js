@@ -845,8 +845,9 @@ export default Ember.Component.extend(ClusterDriver, {
     this.setInstances('master');
   }),
 
-  platformTypeDidChange: observer('config.platform', function() {
-    const platform = get(this, 'platformChoices').find((item) => item.value === get(this, 'config.platform'));
+  platformTypeDidChange: observer('nodePoolList.@each.{platform}', function() {
+    const defaultNodePool = get(this, 'nodePoolList.firstObject') || {};
+    const platform = get(this, 'platformChoices').find((item) => item.value === get(defaultNodePool, 'platform')) || {};
 
     set(this, 'config.osType', platform.osType || 'Linux');
   }),
