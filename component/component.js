@@ -27,13 +27,13 @@ const defaultBase  = 1024;
 
 const PAGE_SIZE = 50;
 const K8S_1_20_11 = '1.20.11-aliyun.1';
-const K8S_1_22_3 = '1.22.3-aliyun.1';
+// const K8S_1_22_3 = '1.22.3-aliyun.1';
 
 const VERSIONS = [
-  {
-    value: K8S_1_22_3,
-    label: K8S_1_22_3
-  },
+  // {
+  //   value: K8S_1_22_3,
+  //   label: K8S_1_22_3
+  // },
   {
     value: K8S_1_20_11,
     label: K8S_1_20_11
