@@ -33,7 +33,7 @@ const VERSIONS = [
   {
     value: K8S_1_22_3,
     label: K8S_1_22_3,
-    rancherEnabled: false,
+    rancherEnabled: true,
     aliyunEnabled: true,
   },
   {
@@ -43,6 +43,7 @@ const VERSIONS = [
     aliyunEnabled: true,
   },
 ];
+const DEFAULT_KUBERNETES_VERSION = K8S_1_22_3;
 const KUBERNETES = 'Kubernetes';
 const MANAGED = 'ManagedKubernetes';
 
@@ -342,7 +343,7 @@ export default Ember.Component.extend(ClusterDriver, {
           addons:                   [{ name: 'flannel' }],
           clusterType:              KUBERNETES,
           containerCidr:            '172.20.0.0/16',
-          kubernetesVersion:        K8S_1_20_11,
+          kubernetesVersion:        DEFAULT_KUBERNETES_VERSION,
           proxyMode:                'ipvs',
           name:                     null,
           displayName:              null,
@@ -440,7 +441,7 @@ export default Ember.Component.extend(ClusterDriver, {
           cb && cb(true);
         }
       } catch (e) {
-        errors.push(get(e, 'body.Message') || e);
+        errors.push(get(e, 'body.Message') || get(e, 'body.message') || e);
         set(this, 'errors', errors);
         cb && cb();
       }
@@ -638,7 +639,7 @@ export default Ember.Component.extend(ClusterDriver, {
 
   resourceGroupChoicesShouldChange: observer('intl.locale', 'resourceGroups', function() {
     const intl    = get(this, 'intl');
-    let choices = get(this, 'resourceGroups').concat();
+    let choices = get(this, 'resourceGroups') || [];
 
     next(() => {
       choices = choices.filter((item) => item.raw.Status === 'OK');
@@ -839,9 +840,9 @@ export default Ember.Component.extend(ClusterDriver, {
 
   clusterTypeDidChange: observer('config.clusterType', function() {
     if ( get(this, 'config.clusterType') === KUBERNETES  ) {
-      set(this, 'config.kubernetesVersion', get(VERSIONS, 'firstObject.value'));
+      set(this, 'config.kubernetesVersion', DEFAULT_KUBERNETES_VERSION);
     } else {
-      set(this, 'config.kubernetesVersion', get(VERSIONS, 'firstObject.value'));
+      set(this, 'config.kubernetesVersion', DEFAULT_KUBERNETES_VERSION);
     }
   }),
 
