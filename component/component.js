@@ -255,7 +255,7 @@ const DEFAULT_NODE_GROUP_CONFIG = {
   type:                     'nodePool',
 }
 
-const MASTER = [{value:3,label:3},{value:5,label:5}];
+const MASTER = [{value: '3',label: '3'},{value: '5',label: '5'}];
 
 const languages = {
   'en-us': {"clusterNew":{"aliyunkcs":{"label":"Aliyun Kubernetes Container Service","shortLabel":"Alibaba ACK","access":{"next":"Next: Configure Cluster","loading":"Loading Zones from Alibaba ACK","title":"Account Access","detail":"Choose the region and API Key that will be used to launch Alibaba Kubernetes Service","nodePoolUpdateError":"The node pool is being created and cannot be upgraded. Please try again later."},"clusterSelect":{"title":"Select Cluster","detail":"Select the ACK cluster you want to register","next":"Register Cluster","importCluster":"Cluster","required":"Import Cluster is required","placeholder":"Choose"},"cluster":{"title":"Cluster Configuration","detail":"Choose the Zone and Kubernetes version that will be used to launch Alibaba Kubernetes Service","next":"Next: Configure Master Nodes","loading":"Loading Availability Zones from Alibaba","name":{"required":"Cluster name is required"}},"clusters":{"k8s":"Dedicated Kubernetes","managed":"Managed Kubernetes","label":"Cluster Type"},"master":{"title":"Master Nodes","detail":"Configure the master nodes that will be used to launch Alibaba Kubernetes Service","next":"Next: Configure Worker Nodes","loading":"Loading Key Pairs from Alibaba"},"worker":{"title":"Worker Nodes","detail":"Configure the worker nodes that will be used to launch Alibaba Kubernetes Service","required":"Worker Nodes is required"},"disk":{"cloud":"Ordinary Disk","ephemeralSsd":"Local SSD Disk","efficiency":"Ultra Disk","ssd":"SSD Disk","essd":"ESSD Disk"},"rootSize":{"label":"Root Disk Size","placeholder":"e.g. 120"},"rootType":{"label":"Root Disk Type","required":"Root Disk Type is required"},"storageType":{"label":"Data Disk Type","required":"Data Disk Type is required"},"storageSize":{"label":"Data Disk Size","placeholder":"e.g. 120"},"masterNum":{"label":"Master Nodes Count","help":"The count of master nodes will be launched in this Kubernetes cluster"},"nodePoolName":{"label":"Nood Pool Name","placeholder":"e.g. nodepool","required":"Worker Node Name is required"},"numOfNodes":{"label":"Worker Nodes Count","placeholder":"e.g. 3","required":"Worker Nodes Count is required","help":"The count of worker nodes will be launched in this Kubernetes cluster"},"keyPair":{"label":"Key Pair","required":"Key Pair is required"},"resourceGroup":{"label":"Resource Group","all":"Account's all Resources"},"region":{"label":"Region"},"vpcId":{"label":"VPC","prompt":"Choose VPC...","required":"VPC is required","default":"Default VPC"},"vswitchId":{"label":"VSwitch","prompt":"Choose VSwitch...","required":"VSwitch is required","default":"Default VSwitch"},"proxyMode":{"label":"Kube-Proxy Mode"},"containerCidr":{"label":"Pod CIDR Block","required":"Pod CIDR Block is required","invalid":"Pod CIDR Block is invalid","placeholder":"Specify a valid CIDR block that contains only internal IP addresses, namely one of the following CIDR blocks or their subnets: 10.0.0.0/8 172.16-31.0.0/12-16 and 192.168.0.0/16.Cannot be duplicated with the VPC and the network segment used by the existing kubernetes cluster in the VPC"},"serviceCidr":{"label":"Service CIDR","required":"Service CIDR is required","invalid":"Service CIDR is invalid","placeholder":"Valid CIDR blocks include: 10.0.0.0/8 172.16-31.0.0/12-16 and 192.168.0.0/16.Cannot be duplicated with the VPC and the network segment used by the existing kubernetes cluster in the VPC"},"nodeCidrMask":{"label":"IP Addresses per Node"},"snatEntry":{"label":"Configure SNAT","placeholder":"Configure SNAT for VPC"},"endpointPublicAccess":{"label":"Public Access","placeholder":"Expose API Server with EIP"},"masterInstanceChargeType":{"label":"Billing Method","prePaid":"Subscription","postPaid":"Pay-As-You-Go"},"masterPeriod":{"label":"Duration","placeholder":"Unit(Month)"},"masterAutoRenew":{"label":"Auto Renewal","placeholder":"Enable"},"masterAutoRenewPeriod":{"label":"Auto Renewal Duration","placeholder":"Unit(Month)"},"platform":{"label":"Operating System"},"accessKeyId":{"label":"Access Key","placeholder":"Your Aliyun access key","required":"Access Key is required"},"accessKeySecret":{"label":"Secret Key","placeholder":"Your Aliyun secret key","provided":"Provided","required":"Secret Key is required"},"version":{"label":"Kubernetes Version","warningAliyun":"“{version}”，Ali Cloud is not supported in this version. If you continue to deploy it, cluster deployment will fail. Please upgrade rancher.","warningRacher":"“{version}”，This version is not supported by Rancher, please upgrade rancher version for reference","warningRancherTip":"Rancher supported versions."},"zoneId":{"label":"Availability Zone","required":"Availability Zone is required"},"instanceType":{"label":"Instance Type","required":"Instance Type is required"}}}},
@@ -306,6 +306,7 @@ export default Ember.Component.extend(ClusterDriver, {
   masterNumChoices:      MASTER,
   nodePoolList:          [],
   clusterChoices:        [],
+  masterCount:           '3',
 
   cloudCredentialDriverName: 'aliyun',
   config: null,
@@ -370,7 +371,8 @@ export default Ember.Component.extend(ClusterDriver, {
       set(this, 'cluster.ackConfig', config);
       set(this, 'config', config);
     } else {
-      set(this, 'vswitchId', get(this, 'config.masterVswitchIds')[0]);
+      get(this, 'config.masterVswitchIds.length') && set(this, 'vswitchId', get(this, 'config.masterVswitchIds')[0]);
+      get(this, 'config.masterCount') && set(this, 'masterCount', get(this, 'config.masterCount').toString());
       get(this, 'config.masterInstanceTypes') && set(this, 'masterInstanceType', get(this, 'config.masterInstanceTypes')[0]);
       set(this, 'nodePoolList', (get(this, 'config.node_pool_list') || []).map(item=>{
         const dataDisk = get(item, 'data_disk.firstObject') || {};
@@ -657,12 +659,18 @@ export default Ember.Component.extend(ClusterDriver, {
     await this.fetchRegions();
   }),
 
+  masterCountChange: observer('masterCount', async function() {
+    set(this, 'config.masterCount', Number(get(this, 'masterCount') || 3));
+  }),
+
   regionDidChange: observer('config.regionId', 'config.resourceGroupId', function() {
     const region = get(this, 'config.regionId');
 
     set(this, 'regionId', region)
 
     if(this.isImportProvider && region){
+      set(this, 'config.cluster_id', null);
+
       this.fetchCluster();
 
       return;
