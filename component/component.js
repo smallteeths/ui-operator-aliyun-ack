@@ -414,20 +414,6 @@ export default Ember.Component.extend(ClusterDriver, {
 
   actions: {
     async aliyunLogin(cb) {
-      setProperties(this, {
-        'errors':                 null,
-      });
-
-      const errors = [];
-      const intl = get(this, 'intl');
-
-      if (errors.length > 0) {
-        set(this, 'errors', errors);
-        cb && cb();
-
-        return;
-      }
-
       try {
         await all([this.fetchResourceGroups(), this.fetchRegions()]);
 
@@ -924,7 +910,7 @@ export default Ember.Component.extend(ClusterDriver, {
   }),
 
   minNumOfNodes: computed('config.clusterType', function() {
-    return get(this, 'config.clusterType') === KUBERNETES ? 0 : 2;
+    return get(this, 'config.clusterType') === KUBERNETES ? 0 : 1;
   }),
 
   selectedZone: computed('config.zoneId', 'zoneChoices', function() {
