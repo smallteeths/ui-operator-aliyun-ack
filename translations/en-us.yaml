@@ -108,13 +108,13 @@ clusterNew:
       prePaid: Subscription
       postPaid: Pay-As-You-Go
     masterPeriod:
-      label: Duration
+      label: Duration(Month)
       placeholder: Unit(Month)
     masterAutoRenew:
       label: Auto Renewal
       placeholder: Enable
     masterAutoRenewPeriod:
-      label: Auto Renewal Duration
+      label: Auto Renewal Duration(Month)
       placeholder: Unit(Month)
     platform:
       label: Operating System

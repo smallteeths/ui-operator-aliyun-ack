@@ -108,13 +108,13 @@ clusterNew:
       prePaid: 包年包月
       postPaid: 按量付费
     masterPeriod:
-      label: 购买时长
+      label: 购买时长(月)
       placeholder: 单位(月)
     masterAutoRenew:
       label: 自动续费
       placeholder: 开启
     masterAutoRenewPeriod:
-      label: 自动续费时长
+      label: 自动续费时长(月)
       placeholder: 单位(月)
     platform:
       label: 操作系统
