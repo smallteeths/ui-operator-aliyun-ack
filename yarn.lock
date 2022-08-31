@@ -2,71 +2,6 @@
 # yarn lockfile v1
 
 
-"@alicloud/credentials@^2":
-  version "2.1.1"
-  resolved "https://registry.nlark.com/@alicloud/credentials/download/@alicloud/credentials-2.1.1.tgz#bd443b124d34553b356da9234f2280619f67d6d4"
-  integrity sha1-vUQ7Ek00VTs1bakjTyKAYZ9n1tQ=
-  dependencies:
-    "@alicloud/tea-typescript" "^1.5.3"
-    httpx "^2.2.0"
-    ini "^1.3.5"
-    kitx "^2.0.0"
-
-"@alicloud/cs20151215@2.4.1":
-  version "2.4.1"
-  resolved "https://registry.nlark.com/@alicloud/cs20151215/download/@alicloud/cs20151215-2.4.1.tgz#353d22f1caa97df5c340cb96cb18d5583beb9391"
-  integrity sha1-NT0i8cqpffXDQMuWyxjVWDvrk5E=
-  dependencies:
-    "@alicloud/endpoint-util" "^0.0.1"
-    "@alicloud/openapi-client" "^0.3.0"
-    "@alicloud/openapi-util" "^0.2.1"
-    "@alicloud/tea-typescript" latest
-    "@alicloud/tea-util" "^1.4.0"
-
-"@alicloud/endpoint-util@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.nlark.com/@alicloud/endpoint-util/download/@alicloud/endpoint-util-0.0.1.tgz#b237f5e04e373abb54c42119377b30bd6afb1a7c"
-  integrity sha1-sjf14E43OrtUxCEZN3swvWr7Gnw=
-  dependencies:
-    "@alicloud/tea-typescript" "^1.5.1"
-    kitx "^2.0.0"
-
-"@alicloud/openapi-client@^0.3.0":
-  version "0.3.3"
-  resolved "https://registry.npm.taobao.org/@alicloud/openapi-client/download/@alicloud/openapi-client-0.3.3.tgz#f03136d5183847053bc0062f7a0ea1d6003906c6"
-  integrity sha1-8DE21Rg4RwU7wAYveg6h1gA5BsY=
-  dependencies:
-    "@alicloud/credentials" "^2"
-    "@alicloud/openapi-util" "^0.2.1"
-    "@alicloud/tea-typescript" latest
-    "@alicloud/tea-util" "^1.4.0"
-
-"@alicloud/openapi-util@^0.2.1":
-  version "0.2.2"
-  resolved "https://registry.nlark.com/@alicloud/openapi-util/download/@alicloud/openapi-util-0.2.2.tgz#d0ac229bed6ef0e7cf03bd78349c4ecb94ecd58a"
-  integrity sha1-0Kwim+1u8OfPA714NJxOy5Ts1Yo=
-  dependencies:
-    "@alicloud/tea-typescript" latest
-    "@alicloud/tea-util" "^1.3.0"
-    kitx "^2.1.0"
-    sm3 "^1.0.3"
-
-"@alicloud/tea-typescript@^1.5.1", "@alicloud/tea-typescript@^1.5.3", "@alicloud/tea-typescript@latest":
-  version "1.7.1"
-  resolved "https://registry.nlark.com/@alicloud/tea-typescript/download/@alicloud/tea-typescript-1.7.1.tgz#312f4ffb1b36e32bffbd28527f0a9f877a83e804"
-  integrity sha1-MS9P+xs24yv/vShSfwqfh3qD6AQ=
-  dependencies:
-    "@types/node" "^12.0.2"
-    httpx "^2.2.6"
-
-"@alicloud/tea-util@^1.3.0", "@alicloud/tea-util@^1.4.0":
-  version "1.4.2"
-  resolved "https://registry.nlark.com/@alicloud/tea-util/download/@alicloud/tea-util-1.4.2.tgz#72e81cefd634d81272c269364c194de70511405c"
-  integrity sha1-cugc79Y02BJywmk2TBlN5wURQFw=
-  dependencies:
-    "@alicloud/tea-typescript" "^1.5.1"
-    kitx "^2.0.0"
-
 "@babel/code-frame@^7.12.13":
   version "7.12.13"
   resolved "https://registry.npm.taobao.org/@babel/code-frame/download/@babel/code-frame-7.12.13.tgz?cache=0&sync_timestamp=1612314682452&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fcode-frame%2Fdownload%2F%40babel%2Fcode-frame-7.12.13.tgz#dcfc826beef65e75c50e21d3837d7d95798dd658"
@@ -951,16 +886,6 @@
   dependencies:
     normalize-path "^2.0.1"
     through2 "^2.0.3"
-
-"@types/node@^12.0.2":
-  version "12.20.13"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-12.20.13.tgz#e743bae112bd779ac9650f907197dd2caa7f0364"
-  integrity sha1-50O64RK9d5rJZQ+QcZfdLKp/A2Q=
-
-"@types/node@^14":
-  version "14.17.1"
-  resolved "https://registry.nlark.com/@types/node/download/@types/node-14.17.1.tgz#5e07e0cb2ff793aa7a1b41deae76221e6166049f"
-  integrity sha1-Xgfgyy/3k6p6G0HernYiHmFmBJ8=
 
 "@ungap/promise-all-settled@1.1.2":
   version "1.1.2"
@@ -2682,6 +2607,15 @@ gulp-jshint@2.1.0:
     rcloader "^0.2.2"
     through2 "^2.0.0"
 
+gulp-jsoncombine@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npmmirror.com/gulp-jsoncombine/-/gulp-jsoncombine-1.0.4.tgz#e510289b02a81d4051fc93949c6b9f1564fb57a7"
+  integrity sha512-Plq65IQf6RyZS5H3wZ+sRrwNoju5BhrbUtpnqfY2oZbsvF6+PfiXw96bXOlWQKZYlTFBv9d7pQhPs8KsWkXNZQ==
+  dependencies:
+    plugin-error "^0.1.2"
+    through "*"
+    vinyl "^2.1.0"
+
 gulp-replace@1.0.0:
   version "1.0.0"
   resolved "https://registry.nlark.com/gulp-replace/download/gulp-replace-1.0.0.tgz?cache=0&sync_timestamp=1620313846971&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fgulp-replace%2Fdownload%2Fgulp-replace-1.0.0.tgz#b32bd61654d97b8d78430a67b3e8ce067b7c9143"
@@ -2882,14 +2816,6 @@ http-parser-js@>=0.5.1:
   resolved "https://registry.npm.taobao.org/http-parser-js/download/http-parser-js-0.5.3.tgz?cache=0&sync_timestamp=1609540073700&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fhttp-parser-js%2Fdownload%2Fhttp-parser-js-0.5.3.tgz#01d2709c79d41698bb01d4decc5e9da4e4a033d9"
   integrity sha1-AdJwnHnUFpi7AdTezF6dpOSgM9k=
 
-httpx@^2.2.0, httpx@^2.2.6:
-  version "2.2.7"
-  resolved "https://registry.npm.taobao.org/httpx/download/httpx-2.2.7.tgz?cache=0&sync_timestamp=1604908782014&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fhttpx%2Fdownload%2Fhttpx-2.2.7.tgz#1e34198146e32ca3305a66c11209559e1cbeba09"
-  integrity sha1-HjQZgUbjLKMwWmbBEglVnhy+ugk=
-  dependencies:
-    "@types/node" "^14"
-    debug "^4.1.1"
-
 inflight@^1.0.4:
   version "1.0.6"
   resolved "https://registry.npm.taobao.org/inflight/download/inflight-1.0.6.tgz#49bd6331d7d02d0c09bc910a1075ba8165b56df9"
@@ -2908,7 +2834,7 @@ inherits@2.0.3:
   resolved "https://registry.nlark.com/inherits/download/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de"
   integrity sha1-Yzwsg+PaQqUC9SRmAiSA9CCCYd4=
 
-ini@^1.3.4, ini@^1.3.5:
+ini@^1.3.4:
   version "1.3.8"
   resolved "https://registry.nlark.com/ini/download/ini-1.3.8.tgz#a29da425b48806f34767a4efce397269af28432c"
   integrity sha1-op2kJbSIBvNHZ6Tvzjlyaa8oQyw=
@@ -3285,13 +3211,6 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.3"
   resolved "https://registry.npm.taobao.org/kind-of/download/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha1-B8BQNKbDSfoG4k+jWqdttFgM5N0=
-
-kitx@^2.0.0, kitx@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.npm.taobao.org/kitx/download/kitx-2.1.0.tgz#fc7fbf78eb6ed7a5a3fd2d7afb3011e29d0e44c8"
-  integrity sha1-/H+/eOtu16Wj/S16+zAR4p0ORMg=
-  dependencies:
-    "@types/node" "^12.0.2"
 
 last-run@^1.1.0:
   version "1.1.1"
@@ -4541,11 +4460,6 @@ side-channel@^1.0.4:
     get-intrinsic "^1.0.2"
     object-inspect "^1.9.0"
 
-sm3@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npm.taobao.org/sm3/download/sm3-1.0.3.tgz#0051f0cc948c983944843136e7baa244eec5cd49"
-  integrity sha1-AFHwzJSMmDlEhDE257qiRO7FzUk=
-
 snapdragon-node@^2.0.1:
   version "2.1.1"
   resolved "https://registry.npm.taobao.org/snapdragon-node/download/snapdragon-node-2.1.1.tgz#6c175f86ff14bdb0724563e8f3c1b021a286853b"
@@ -4833,6 +4747,11 @@ through2@^3.0.0:
   dependencies:
     inherits "^2.0.4"
     readable-stream "2 || 3"
+
+through@*:
+  version "2.3.8"
+  resolved "https://registry.npmmirror.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
+  integrity sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==
 
 time-stamp@^1.0.0:
   version "1.1.0"
