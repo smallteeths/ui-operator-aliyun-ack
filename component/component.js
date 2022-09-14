@@ -1,14 +1,14 @@
-/*!!!!!!!!!!!Do not change anything between here (the DRIVERNAME placeholder will be automatically replaced at buildtime)!!!!!!!!!!!*/
+/* !!!!!!!!!!!Do not change anything between here (the DRIVERNAME placeholder will be automatically replaced at buildtime)!!!!!!!!!!!*/
 import ClusterDriver from 'shared/mixins/cluster-driver';
 
 // do not remove LAYOUT, it is replaced at build time with a base64 representation of the template of the hbs template
 // we do this to avoid converting template to a js file that returns a string and the cors issues that would come along with that
 const LAYOUT;
 const LANGUAGE;
-/*!!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
+/* !!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
 
 
-/*!!!!!!!!!!!GLOBAL CONST START!!!!!!!!!!!*/
+/* !!!!!!!!!!!GLOBAL CONST START!!!!!!!!!!!*/
 // EMBER API Access - if you need access to any of the Ember API's add them here in the same manner rather then import them via modules, since the dependencies exist in rancher we dont want to expor the modules in the amd def
 const computed     = Ember.computed;
 const observer     = Ember.observer;
@@ -24,7 +24,7 @@ const equal        = Ember.computed.equal;
 
 const defaultRadix = 10;
 const defaultBase  = 1024;
-/*!!!!!!!!!!!GLOBAL CONST END!!!!!!!!!!!*/
+/* !!!!!!!!!!!GLOBAL CONST END!!!!!!!!!!!*/
 
 const languages = LANGUAGE;
 const PAGE_SIZE = 50;
@@ -33,16 +33,16 @@ const K8S_1_22_10 = '1.22.10-aliyun.1';
 
 const VERSIONS = [
   {
-    value: K8S_1_24_3,
-    label: K8S_1_24_3,
+    value:          K8S_1_24_3,
+    label:          K8S_1_24_3,
     rancherEnabled: true,
-    aliyunEnabled: true,
+    aliyunEnabled:  true,
   },
   {
-    value: K8S_1_22_10,
-    label: K8S_1_22_10,
+    value:          K8S_1_22_10,
+    label:          K8S_1_22_10,
     rancherEnabled: true,
-    aliyunEnabled: true,
+    aliyunEnabled:  true,
   },
 ];
 const DEFAULT_KUBERNETES_VERSION = K8S_1_24_3;
@@ -221,25 +221,25 @@ const PERIODS = [
 
 const PLATFORMTYPES = [
   {
-    label: 'CentOS 7.7',
-    value: 'CentOS',
+    label:  'CentOS 7.7',
+    value:  'CentOS',
     osType: 'Linux'
   },
   {
-    label: 'AliyunLinux',
-    value: 'AliyunLinux',
+    label:  'AliyunLinux',
+    value:  'AliyunLinux',
     osType: 'Linux'
   },
   {
-    label: 'Windows Server 2019',
-    value: 'Windows',
-    osType: 'Windows',
+    label:   'Windows Server 2019',
+    value:   'Windows',
+    osType:  'Windows',
     managed: true
   },
   {
-    label: 'Windows Server Core, version 1909',
-    value: 'WindowsCore',
-    osType: 'Windows',
+    label:   'Windows Server Core, version 1909',
+    value:   'WindowsCore',
+    osType:  'Windows',
     managed: true
   }
 ];
@@ -257,9 +257,15 @@ const DEFAULT_NODE_GROUP_CONFIG = {
   type:                     'nodePool',
 }
 
-const MASTER = [{value: '3',label: '3'},{value: '5',label: '5'}];
+const MASTER = [{
+  value: '3',
+  label: '3'
+}, {
+  value: '5',
+  label: '5'
+}];
 
-/*!!!!!!!!!!!DO NOT CHANGE START!!!!!!!!!!!*/
+/* !!!!!!!!!!!DO NOT CHANGE START!!!!!!!!!!!*/
 export default Ember.Component.extend(ClusterDriver, {
   driverName:  '%%DRIVERNAME%%',
   app:         service(),
@@ -303,15 +309,14 @@ export default Ember.Component.extend(ClusterDriver, {
   masterCount:           '3',
 
   cloudCredentialDriverName: 'aliyun',
-  config: null,
+  config:                    null,
 
   init() {
     // This does on the fly template compiling, if you mess with this :cry:
     const decodedLayout = window.atob(LAYOUT);
-    const template      = Ember.HTMLBars.compile(decodedLayout, {
-      moduleName: 'shared/components/cluster-driver/driver-%%DRIVERNAME%%/template'
-    });
-    set(this,'layout', template);
+    const template      = Ember.HTMLBars.compile(decodedLayout, { moduleName: 'shared/components/cluster-driver/driver-%%DRIVERNAME%%/template' });
+
+    set(this, 'layout', template);
     this._super(...arguments);
 
     const lang = get(this, 'session.language');
@@ -321,7 +326,7 @@ export default Ember.Component.extend(ClusterDriver, {
     let config      = get(this, 'config');
 
     if ( !config ) {
-      if(this.isImportProvider){
+      if (this.isImportProvider){
         config = this.get('globalStore').createRecord({
           type:                     'ackConfig',
           imported:                 true,
@@ -330,7 +335,7 @@ export default Ember.Component.extend(ClusterDriver, {
           cluster_name:             null,
           regionId:                 'cn-beijing',
         });
-      }else{
+      } else {
         config = this.get('globalStore').createRecord({
           type:                     'ackConfig',
           accessKeyId:              null,
@@ -359,7 +364,11 @@ export default Ember.Component.extend(ClusterDriver, {
           resourceGroupId:          '',
         });
 
-        set(this, 'nodePoolList', [{...DEFAULT_NODE_GROUP_CONFIG, size: null, category: null}])
+        set(this, 'nodePoolList', [{
+          ...DEFAULT_NODE_GROUP_CONFIG,
+          size:     null,
+          category: null
+        }])
       }
 
       set(this, 'cluster.ackConfig', config);
@@ -368,21 +377,21 @@ export default Ember.Component.extend(ClusterDriver, {
       get(this, 'config.masterVswitchIds.length') && set(this, 'vswitchId', get(this, 'config.masterVswitchIds')[0]);
       get(this, 'config.masterCount') && set(this, 'masterCount', get(this, 'config.masterCount').toString());
       get(this, 'config.masterInstanceTypes') && set(this, 'masterInstanceType', get(this, 'config.masterInstanceTypes')[0]);
-      set(this, 'nodePoolList', (get(this, 'config.node_pool_list') || []).map(item=>{
+      set(this, 'nodePoolList', (get(this, 'config.node_pool_list') || []).map((item) => {
         const dataDisk = get(item, 'data_disk.firstObject') || {};
 
         return {
           ...item,
-          instance_types: get(item, 'instance_types.firstObject') || '',
-          size: dataDisk.size || '',
-          category: dataDisk.category || '',
-          displayCategory: this.getDiskLabel(dataDisk.category),
+          instance_types:            get(item, 'instance_types.firstObject') || '',
+          size:                      dataDisk.size || '',
+          category:                  dataDisk.category || '',
+          displayCategory:           this.getDiskLabel(dataDisk.category),
           displaySystemDiskCategory: this.getDiskLabel(item.system_disk_category),
         }
       }));
     }
   },
-  /*!!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
+  /* !!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
   // Add custom validation beyond what can be done from the config API schema
   validate() {
     // Get generic API validation errors
@@ -413,12 +422,12 @@ export default Ember.Component.extend(ClusterDriver, {
 
         this.regionDidChange();
 
-        if(this.isImportProvider){
+        if (this.isImportProvider){
           set(this, 'step', 1.5);
           cb && cb(true);
-        }else if (this.editing){
+        } else if (this.editing){
           this.getConfigWorkerChoices(cb);
-        }else{
+        } else {
           set(this, 'step', 2);
           cb && cb(true);
         }
@@ -511,7 +520,7 @@ export default Ember.Component.extend(ClusterDriver, {
 
       config.aliyun_credential_secret = aliyun_credential_secret;
 
-      if( !clusterName ) {
+      if ( !clusterName ) {
         errors.push(intl.t('clusterNew.aliyunkcs.cluster.name.required'));
       }
 
@@ -525,12 +534,12 @@ export default Ember.Component.extend(ClusterDriver, {
         errors.push(intl.t('clusterNew.aliyunkcs.worker.required'));
       }
 
-      const defaultNodePool = get(config, 'node_pool_list').find(item=>item.name === 'default-nodepool') || {} ;
+      const defaultNodePool = get(config, 'node_pool_list').find((item) => item.name === 'default-nodepool') || {} ;
       const keyPair = defaultNodePool.key_pair || get(this, 'config.keyPair');
 
-      if(!keyPair){
+      if (!keyPair){
         errors.push(intl.t('clusterNew.aliyunkcs.keyPair.required'));
-      }else{
+      } else {
         set(config, 'keyPair', keyPair);
       }
 
@@ -563,7 +572,7 @@ export default Ember.Component.extend(ClusterDriver, {
       const clusterId = get(this, 'config.cluster_id')
       const intl    = get(this, 'intl');
 
-      if( !clusterId ) {
+      if ( !clusterId ) {
         errors.push(intl.t('clusterNew.aliyunkcs.clusterSelect.required'));
       }
 
@@ -582,7 +591,7 @@ export default Ember.Component.extend(ClusterDriver, {
       const ngConfig = {
         ...DEFAULT_NODE_GROUP_CONFIG,
         instance_types: get(this, 'instanceChoices.firstObject.value'),
-        name:    '',
+        name:           '',
       };
 
       if (!Array.isArray(nodePoolList)) {
@@ -613,10 +622,10 @@ export default Ember.Component.extend(ClusterDriver, {
 
   languageDidChanged: observer('intl.locale', function() {
     const lang = get(this, 'intl.locale');
+
     if (lang) {
       this.loadLanguage(lang[0]);
     }
-
   }),
 
   resourceGroupChoicesShouldChange: observer('intl.locale', 'resourceGroups', function() {
@@ -648,7 +657,7 @@ export default Ember.Component.extend(ClusterDriver, {
 
     set(this, 'regionId', region)
 
-    if(this.isImportProvider && region){
+    if (this.isImportProvider && region){
       set(this, 'config.cluster_id', null);
 
       this.fetchCluster();
@@ -657,9 +666,7 @@ export default Ember.Component.extend(ClusterDriver, {
     }
     const intl = get(this, 'intl');
     const resourceGroupId = get(this, 'config.resourceGroupId');
-    const externalParams = {
-      regionId: get(this, 'config.regionId'),
-    };
+    const externalParams = { regionId: get(this, 'config.regionId'), };
 
     if (!!resourceGroupId && resourceGroupId !== '') {
       externalParams.resourceGroupId = resourceGroupId;
@@ -759,7 +766,7 @@ export default Ember.Component.extend(ClusterDriver, {
     }
 
     next(() => {
-      vpcs = vpcs.map(vpc => {
+      vpcs = vpcs.map((vpc) => {
         if (vpc.raw.IsDefault) {
           return {
             ...vpc,
@@ -806,7 +813,7 @@ export default Ember.Component.extend(ClusterDriver, {
     }
 
     next(() => {
-      vswitches = vswitches.map(vswitch => {
+      vswitches = vswitches.map((vswitch) => {
         if (vswitch.raw.IsDefault) {
           return {
             ...vswitch,
@@ -822,6 +829,7 @@ export default Ember.Component.extend(ClusterDriver, {
 
   clusterNameDidChange: observer('cluster.name', function() {
     const clusterName = get(this, 'cluster.name');
+
     set(this, 'config.name', clusterName);
     set(this, 'config.displayName', clusterName);
   }),
@@ -848,10 +856,11 @@ export default Ember.Component.extend(ClusterDriver, {
   masterInstanceTypeDidChange: observer('masterInstanceType', function() {
     const type = get(this, 'masterInstanceType');
     const inst = get(this, 'instanceChoices').findBy('value', type) || {};
+
     if (inst.systemDisk && inst.systemDisk.length) {
       set(this, 'systemDiskChoices', inst.systemDisk);
 
-      if(!get(inst, 'systemDisk').findBy('value', get(this, 'config.masterSystemDiskCategory'))){
+      if (!get(inst, 'systemDisk').findBy('value', get(this, 'config.masterSystemDiskCategory'))){
         const firstValue = get(inst.systemDisk, 'firstObject.value');
 
         set(this, 'config.masterSystemDiskCategory', firstValue || null);
@@ -866,12 +875,14 @@ export default Ember.Component.extend(ClusterDriver, {
   workersInstanceTypeDidChange: observer('nodePoolList.@each.{instance_types}', function() {
     const nodePoolList = get(this, 'nodePoolList') || [];
     const instanceChoices = get(this, 'instanceChoices') || [];
-    nodePoolList.forEach(nodePool=>{
+
+    nodePoolList.forEach((nodePool) => {
       const inst = instanceChoices.findBy('value', nodePool.instance_types) || {};
+
       if (inst.systemDisk && inst.systemDisk.length) {
         set(nodePool, 'systemDisk', inst.systemDisk);
 
-        if(!get(inst, 'systemDisk').findBy('value', get(nodePool, 'system_disk_category'))){
+        if (!get(inst, 'systemDisk').findBy('value', get(nodePool, 'system_disk_category'))){
           const firstValue = get(inst.systemDisk, 'firstObject.value')
 
           set(nodePool, 'system_disk_category', firstValue || null);
@@ -885,7 +896,7 @@ export default Ember.Component.extend(ClusterDriver, {
 
         const found = get(inst, 'dataDisk').findBy('value', get(nodePool, 'category'));
 
-        if(!found){
+        if (!found){
           const firstValue = get(inst.dataDisk, 'firstObject.value');
 
           set(nodePool, 'category', firstValue || null);
@@ -898,7 +909,8 @@ export default Ember.Component.extend(ClusterDriver, {
 
   nodePoolActive: computed('config.node_pool_list.@each.{nodepool_id}', function() {
     const list = get(this, 'config.node_pool_list') || [];
-    return list.every(item=>{
+
+    return list.every((item) => {
       return item.nodepool_id;
     })
   }),
@@ -934,7 +946,7 @@ export default Ember.Component.extend(ClusterDriver, {
 
   platformChoices: computed('intl.locale', 'config.clusterType', function() {
     if (get(this, 'config.clusterType') === KUBERNETES) {
-      return PLATFORMTYPES.filter(item => get(item, 'managed') !== true);
+      return PLATFORMTYPES.filter((item) => get(item, 'managed') !== true);
     } else {
       return PLATFORMTYPES;
     }
@@ -998,9 +1010,11 @@ export default Ember.Component.extend(ClusterDriver, {
   showImportCluster: computed('clusterChoices', 'config.cluster_id', function() {
     const clusterId = get(this, 'config.cluster_id');
     const selectCluster = get(this, 'clusterChoices').findBy('value', clusterId);
-    if(clusterId && selectCluster){
+
+    if (clusterId && selectCluster){
       return get(selectCluster, 'label');
     }
+
     return '';
   }),
   showRegion: computed('regionChoices', 'config.regionId', function() {
@@ -1020,7 +1034,7 @@ export default Ember.Component.extend(ClusterDriver, {
   kubernetesVersionDisabledAliyun: computed('intl.locale', 'config.kubernetesVersion', function() {
     const kubernetesVersion = get(this, 'config.kubernetesVersion');
 
-    return VERSIONS.find(v=>{
+    return VERSIONS.find((v) => {
       return v.value === kubernetesVersion && !v.aliyunEnabled
     })
   }),
@@ -1028,7 +1042,7 @@ export default Ember.Component.extend(ClusterDriver, {
   kubernetesVersionDisabledRancher: computed('intl.locale', 'config.kubernetesVersion', function() {
     const kubernetesVersion = get(this, 'config.kubernetesVersion');
 
-    return VERSIONS.find(v=>{
+    return VERSIONS.find((v) => {
       return v.value === kubernetesVersion && !v.rancherEnabled
     })
   }),
@@ -1051,9 +1065,7 @@ export default Ember.Component.extend(ClusterDriver, {
   },
 
   setInstances(type) {
-    const externalParams = {
-      regionId: get(this, 'config.regionId'),
-    };
+    const externalParams = { regionId: get(this, 'config.regionId'), };
 
     if (type === 'master') {
       set(externalParams, 'instanceChargeType', get(this, 'config.masterInstanceChargeType'));
@@ -1071,7 +1083,7 @@ export default Ember.Component.extend(ClusterDriver, {
               };
             }));
 
-            if(type === 'master'){
+            if (type === 'master'){
               let instanceType;
 
               if ( (get(this, 'instanceChoices').findBy('value', get(this, 'masterInstanceType'))) ) {
@@ -1081,8 +1093,8 @@ export default Ember.Component.extend(ClusterDriver, {
               }
 
               set(this, 'masterInstanceType', instanceType);
-            }else{
-              (get(this, 'nodePoolList') || []).forEach(nodePool=>{
+            } else {
+              (get(this, 'nodePoolList') || []).forEach((nodePool) => {
                 let instanceType = '';
 
                 if (get(this, 'instanceChoices').findBy('value', get(nodePool, 'instance_types'))) {
@@ -1103,6 +1115,7 @@ export default Ember.Component.extend(ClusterDriver, {
           errors.pushObject(err.message || get(err, 'body.detail') || err);
           set(this, 'errors', errors);
           reject();
+
           return;
         });
     });
@@ -1110,9 +1123,7 @@ export default Ember.Component.extend(ClusterDriver, {
 
   setKeyPairs() {
     const resourceGroupId = get(this, 'config.resourceGroupId');
-    const externalParams = {
-      regionId: get(this, 'config.regionId'),
-    };
+    const externalParams = { regionId: get(this, 'config.regionId'), };
 
     if (!!resourceGroupId && resourceGroupId !== '') {
       externalParams.resourceGroupId = resourceGroupId;
@@ -1138,11 +1149,12 @@ export default Ember.Component.extend(ClusterDriver, {
 
   async fetchResourceGroups() {
     const groups = await this.fetch('ResourceGroup', 'ResourceGroups');
+
     set(this, 'resourceGroups', groups.map((group) => {
       return {
         label: `${ group.raw.DisplayName } (${ group.raw.Id })`,
         value: group.raw.Id,
-        raw: group.raw
+        raw:   group.raw
       };
     }));
   },
@@ -1169,18 +1181,16 @@ export default Ember.Component.extend(ClusterDriver, {
 
   async fetchCluster() {
     const regionId = get(this, 'config.regionId');
-    const clusters = await this.fetch('', 'cluster', {
-      regionId,
-    });
+    const clusters = await this.fetch('', 'cluster', { regionId, });
 
-    set(this, 'clusterChoices', (get(clusters, 'clusters') || []).map((item, index)=>{
-      if(index === 0){
+    set(this, 'clusterChoices', (get(clusters, 'clusters') || []).map((item, index) => {
+      if (index === 0){
         set(this, 'config.cluster_id', item.cluster_id)
       }
 
       return {
-        value:item.cluster_id,
-        label:item.name,
+        value:  item.cluster_id,
+        label:  item.name,
         region: item.region_id,
       }
     }));
@@ -1210,10 +1220,10 @@ export default Ember.Component.extend(ClusterDriver, {
     let instanceType = '';
     const instanceChoices = get(this, 'instanceChoices') || [];
 
-    if(type === 'master'){
+    if (type === 'master'){
       type = instanceType ? 'worker' : 'master'
       instanceType = get(this, `masterInstanceType`);
-    }else{
+    } else {
       instanceType = get(nodePool, `instance_types`) || get(instanceChoices, 'firstObject.value');
     }
 
@@ -1230,7 +1240,7 @@ export default Ember.Component.extend(ClusterDriver, {
 
       const instanceChoices = get(this, 'instanceChoices') || [];
       const systemDisk = results.map((item) => {
-        let disk = DISKS.find(disk => disk.value === item);
+        let disk = DISKS.find((disk) => disk.value === item);
 
         return {
           value: item,
@@ -1239,11 +1249,13 @@ export default Ember.Component.extend(ClusterDriver, {
       });
 
       const selectInstance = instanceChoices.findBy('value', instanceType) || {};
+
       set(selectInstance, 'systemDisk', systemDisk);
 
       type === 'master' ? set(this, 'systemDiskChoices', systemDisk) : set(nodePool, 'systemDisk', systemDisk);
 
       const selectedDisk = type === 'master' ? get(this, `config.masterSystemDiskCategory`) : get(nodePool, 'system_disk_category');
+
       if (selectedDisk) {
         const found = systemDisk.findBy('value', selectedDisk);
 
@@ -1276,19 +1288,22 @@ export default Ember.Component.extend(ClusterDriver, {
         results = this.getAvailableResources(res);
 
         const dataDiskChoices = results.map((item) => {
-          let disk = DISKS.find(disk => disk.value === item);
+          let disk = DISKS.find((disk) => disk.value === item);
+
           if (disk === undefined) {
             return null;
           }
+
           return {
             value: item,
             label: disk.label
           };
         });
+
         set(selectInstance, 'dataDisk', dataDiskChoices)
 
         set(nodePool, 'dataDisk', dataDiskChoices);
-        if(!dataDiskChoices.findBy('value', get(nodePool, 'category'))){
+        if (!dataDiskChoices.findBy('value', get(nodePool, 'category'))){
           const firstValue = get(dataDiskChoices, 'firstObject.value');
 
           set(nodePool, 'category', firstValue || null);
@@ -1304,7 +1319,8 @@ export default Ember.Component.extend(ClusterDriver, {
   getAvailableResources(res) {
     const results = [];
     const zones = res['AvailableZones'];
-    if(!zones){
+
+    if (!zones){
       return results;
     }
 
@@ -1379,12 +1395,13 @@ export default Ember.Component.extend(ClusterDriver, {
 
   fetch(resource, plural, externalParams = {}, page = 1) {
     let resourceName = '';
-    if(resource){
+
+    if (resource){
       resourceName = this.toLowerCaseInitial(resource);
     } else {
       resourceName  = this.toLowerCaseInitial(plural)
     }
-    if(resourceName === 'vSwitch'){
+    if (resourceName === 'vSwitch'){
       resourceName = 'vswitch'
     }
 
@@ -1392,14 +1409,14 @@ export default Ember.Component.extend(ClusterDriver, {
 
     if (get(this, 'intl.locale.firstObject') === 'en-us') {
       acceptLanguage = 'en-US';
-    };
+    }
 
     const cloudCredentialId = get(this, 'primaryResource.cloudCredentialId');
     const results = [];
     const location = window.location;
     let req = {};
 
-    const url = `${location.origin}/meta/ack/${resourceName}`
+    const url = `${ location.origin }/meta/ack/${ resourceName }`
     const query = Object.assign({}, externalParams, {
       cloudCredentialId,
       acceptLanguage,
@@ -1409,12 +1426,12 @@ export default Ember.Component.extend(ClusterDriver, {
     query.pageNumber = page;
 
     req = {
-      url:     `${url}?${this.getQueryParamsString(query)}`,
+      url:     `${ url }?${ this.getQueryParamsString(query) }`,
       method:  'GET',
     };
 
     return new EmberPromise((resolve, reject) => {
-      if(!cloudCredentialId){
+      if (!cloudCredentialId){
         // console.error(`${resourceName}: "cloudCredentialId" not found`)
         return resolve(results);
       }
@@ -1470,24 +1487,25 @@ export default Ember.Component.extend(ClusterDriver, {
   formatNodePoolList(nodePools, errors){
     const intl = get(this, 'intl');
 
-    return nodePools.map(item=>{
-      if(!item.name){
+    return nodePools.map((item) => {
+      if (!item.name){
         errors.push(intl.t('clusterNew.aliyunkcs.nodePoolName.required'));
       }
-      if(!item.system_disk_category){
+      if (!item.system_disk_category){
         errors.push(intl.t('clusterNew.aliyunkcs.rootType.required'));
       }
+
       return {
-        nodepool_id: item.nodepool_id,
-        name: item.name,
-        instance_types: [item.instance_types],
-        instances_num: item.instances_num,
-        key_pair: item.key_pair || this.config.keyPair,
-        platform: item.platform,
+        nodepool_id:          item.nodepool_id,
+        name:                 item.name,
+        instance_types:       [item.instance_types],
+        instances_num:        item.instances_num,
+        key_pair:             item.key_pair || this.config.keyPair,
+        platform:             item.platform,
         system_disk_category: item.system_disk_category,
-        system_disk_size: item.system_disk_size,
-        data_disk: (!item.size || !item.category) ? [] : [{
-          size: item.size,
+        system_disk_size:     item.system_disk_size,
+        data_disk:            (!item.size || !item.category) ? [] : [{
+          size:     item.size,
           category: item.category,
         }],
         v_switch_ids: [get(this, 'vswitchId')]
@@ -1503,6 +1521,7 @@ export default Ember.Component.extend(ClusterDriver, {
       cb && cb(true);
     }).catch(() => {
       cb && cb();
+
       return;
     });
   },
@@ -1514,19 +1533,20 @@ export default Ember.Component.extend(ClusterDriver, {
         return id;
       }
     }
+
     return get(choices.findBy('value', id), 'label') || '';
   },
   getDiskLabel(category){
-    if(!category){
+    if (!category){
       return '';
     }
 
     const intl = get(this, 'intl');
     const disk = DISKS.findBy('value', category);
 
-    if(!disk){
+    if (!disk){
       return category;
-    }else{
+    } else {
       return intl.t(get(disk, 'label'));
     }
   },

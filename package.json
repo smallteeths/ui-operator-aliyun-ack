@@ -8,9 +8,6 @@
   },
   "author": "Rancher Labs, Inc.",
   "license": "Apache-2.0",
-  "bugs": {
-    "url": ""
-  },
   "scripts": {
     "start": "./node_modules/.bin/gulp server",
     "clean": "./node_modules/.bin/gulp clean",
@@ -31,12 +28,12 @@
     "gulp-concat": "2.6.1",
     "gulp-connect": "5.7.0",
     "gulp-jshint": "2.1.0",
+    "gulp-jsoncombine": "^1.0.4",
     "gulp-replace": "1.0.0",
     "gulp-sourcemaps": "2.6.4",
     "gulp-yaml": "^2.0.3",
     "jshint": "2.9.7",
     "replace-string": "^2.0.0",
-    "yargs": "^15.3.1",
-    "gulp-jsoncombine": "^1.0.4"
+    "yargs": "^15.3.1"
   }
 }
