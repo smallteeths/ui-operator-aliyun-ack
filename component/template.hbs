@@ -30,7 +30,7 @@
         </div>
       {{/if}}
     {{/accordion-list-item}}
-    {{#if isImportProvider}}
+    {{#if (and isNew isImportProvider)}}
       {{#if (gte step 1.5)}}
         {{#accordion-list-item
           title=(t "clusterNew.aliyunkcs.clusterSelect.title")
@@ -593,6 +593,11 @@
                 <label class="acc-label">
                   {{t "clusterNew.aliyunkcs.numOfNodes.label"}}
                 </label>
+
+                {{#input-or-display
+                  editable=(not isImportProvider)
+                  value=nodePool.instances_num
+                }}
                 {{#if (eq nodePool.name 'default-nodepool')}}
                   {{input-integer
                     min=minNumOfNodes
@@ -613,6 +618,7 @@
                 <p class="help-block">
                   {{t "clusterNew.aliyunkcs.numOfNodes.help"}}
                 </p>
+                {{/input-or-display}}
               </div>
             </div>
             <div class="row">
@@ -732,26 +738,37 @@
           </div>
         {{/each}}
 
-        <div class="row mt-15">
-          <button
-            class="btn bg-link icon-btn pull-left"
-            type="button"
-            disabled={{not instanceChoices.length}}
-            {{action "addNodePool"}}
-          >
-            <i class="icon icon-plus text-small"></i>
-            <span>
-              {{t "clusterNew.amazoneks.nodeGroups.addLabel"}}
-            </span>
-          </button>
-        </div>
+        {{#unless isImportProvider}}
+          <div class="row mt-15">
+            <button
+              class="btn bg-link icon-btn pull-left"
+              type="button"
+              disabled={{not instanceChoices.length}}
+              {{action "addNodePool"}}
+            >
+              <i class="icon icon-plus text-small"></i>
+              <span>
+                {{t "clusterNew.amazoneks.nodeGroups.addLabel"}}
+              </span>
+            </button>
+          </div>
+        {{/unless}}
+
       {{/accordion-list-item}}
       {{#if (eq step 4)}}
-        {{save-cancel
-          editing=(eq mode "edit")
-          save=(action "save")
-          cancel=close
-        }}
+        {{#if isImportProvider}}
+          <div class="text-center pt-20 pb-20">
+            <button class="btn-large btn bg-transparent outline-primary" type="button" {{action "cancel"}}>
+              {{t "saveCancel.cancel"}}
+            </button>
+          </div>
+        {{else}}
+          {{save-cancel
+            editing=(eq mode "edit")
+            save=(action "save")
+            cancel=close
+          }}
+        {{/if}}
       {{/if}}
     {{/if}}
     {{/if}}

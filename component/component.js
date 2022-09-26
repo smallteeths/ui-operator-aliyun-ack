@@ -422,7 +422,7 @@ export default Ember.Component.extend(ClusterDriver, {
 
         this.regionDidChange();
 
-        if (this.isImportProvider){
+        if (this.isImportProvider && this.isNew){
           set(this, 'step', 1.5);
           cb && cb(true);
         } else if (this.editing){
