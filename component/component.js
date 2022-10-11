@@ -28,24 +28,24 @@ const defaultBase  = 1024;
 
 const languages = LANGUAGE;
 const PAGE_SIZE = 50;
-const K8S_1_24_3 = '1.24.3-aliyun.1';
-const K8S_1_22_10 = '1.22.10-aliyun.1';
+const K8S_1_24_6 = '1.24.6-aliyun.1';
+const K8S_1_22_15 = '1.22.15-aliyun.1';
 
 const VERSIONS = [
   {
-    value:          K8S_1_24_3,
-    label:          K8S_1_24_3,
+    value:          K8S_1_24_6,
+    label:          K8S_1_24_6,
     rancherEnabled: true,
     aliyunEnabled:  true,
   },
   {
-    value:          K8S_1_22_10,
-    label:          K8S_1_22_10,
+    value:          K8S_1_22_15,
+    label:          K8S_1_22_15,
     rancherEnabled: true,
     aliyunEnabled:  true,
   },
 ];
-const DEFAULT_KUBERNETES_VERSION = K8S_1_24_3;
+const DEFAULT_KUBERNETES_VERSION = K8S_1_24_6;
 const KUBERNETES = 'Kubernetes';
 const MANAGED = 'ManagedKubernetes';
 
