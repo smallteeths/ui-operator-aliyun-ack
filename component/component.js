@@ -42,13 +42,13 @@ const VERSIONS = [
   {
     value:          K8S_1_22_15,
     label:          K8S_1_22_15,
-    rancherEnabled: true,
+    rancherEnabled: false,
     aliyunEnabled:  true,
   },
   {
     value:          K8S_1_20_11,
     label:          K8S_1_20_11,
-    rancherEnabled: true,
+    rancherEnabled: false,
     aliyunEnabled:  true,
   },
 ];
