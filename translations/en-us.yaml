@@ -41,6 +41,7 @@ clusterNew:
       efficiency: Ultra Disk
       ssd: SSD Disk
       essd: ESSD Disk
+      cloudAuto: ESSD AutoPL Disk
     rootSize:
       label: Root Disk Size
       placeholder: e.g. 120

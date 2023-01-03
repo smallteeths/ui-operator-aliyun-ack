@@ -41,6 +41,7 @@ clusterNew:
       efficiency: 高效雲盤
       ssd: SSD 雲盤
       essd: ESSD 雲盤
+      cloudAuto: ESSD AutoPL 雲盤
     rootSize:
       label: 根磁碟大小
       placeholder: '例如: 120'

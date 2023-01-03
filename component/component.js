@@ -87,7 +87,11 @@ const DISKS = [
   {
     label: 'clusterNew.aliyunkcs.disk.essd',
     value: 'cloud_essd'
-  }
+  },
+  {
+    label: 'clusterNew.aliyunkcs.disk.cloudAuto',
+    value: 'cloud_auto'
+  },
 ];
 
 const CLUSTER_TYPES = [
@@ -495,11 +499,39 @@ export default Ember.Component.extend(ClusterDriver, {
       set(this, 'errors', null);
       const errors = [];
       const intl = get(this, 'intl');
+      const vpcId = get(this, 'config.vpcId');
+      const vswitchId = get(this, 'vswitchId');
+      const containerCidr = get(this, 'config.containerCidr');
+      const serviceCidr = get(this, 'config.serviceCidr');
 
       const masterInstanceType = get(this, 'masterInstanceType');
 
       if ( !masterInstanceType && get(this, 'config.clusterType') === KUBERNETES ) {
         errors.push(intl.t('clusterNew.aliyunkcs.instanceType.required'));
+      }
+
+      if ( !vpcId ) {
+        errors.push(intl.t('clusterNew.aliyunkcs.vpcId.required'));
+      }
+
+      if ( !vswitchId ) {
+        errors.push(intl.t('clusterNew.aliyunkcs.vswitchId.required'));
+      }
+
+      if ( !containerCidr ) {
+        errors.push(intl.t('clusterNew.aliyunkcs.containerCidr.required'));
+      }
+
+      if ( !serviceCidr ) {
+        errors.push(intl.t('clusterNew.aliyunkcs.serviceCidr.required'));
+      }
+
+      if ( !this.validatePodCIDR() ) {
+        errors.push(intl.t('clusterNew.aliyunkcs.containerCidr.invalid'));
+      }
+
+      if ( !this.validateServiceCIDR() ) {
+        errors.push(intl.t('clusterNew.aliyunkcs.serviceCidr.invalid'));
       }
 
       if (errors.length > 0) {
@@ -1246,13 +1278,17 @@ export default Ember.Component.extend(ClusterDriver, {
       results = this.getAvailableResources(res);
 
       const instanceChoices = get(this, 'instanceChoices') || [];
-      const systemDisk = results.map((item) => {
-        let disk = DISKS.find((disk) => disk.value === item);
+      const systemDisk = [];
 
-        return {
-          value: item,
-          label: disk.label
-        };
+      results.forEach((item) => {
+        const disk = DISKS.find((disk) => disk.value === item);
+
+        if(disk){
+          systemDisk.push({
+            value: item,
+            label: disk.label
+          })
+        }
       });
 
       const selectInstance = instanceChoices.findBy('value', instanceType) || {};
@@ -1292,19 +1328,18 @@ export default Ember.Component.extend(ClusterDriver, {
         ioOptimized:          'optimized',
         destinationResource:  'DataDisk'
       }).then((res) => {
-        results = this.getAvailableResources(res);
+        results = this.getAvailableResources(res) || [];
+        const dataDiskChoices = [];
 
-        const dataDiskChoices = results.map((item) => {
+        results.forEach((item) => {
           let disk = DISKS.find((disk) => disk.value === item);
 
-          if (disk === undefined) {
-            return null;
+          if(disk){
+            dataDiskChoices.push({
+              value: item,
+              label: disk.label
+            })
           }
-
-          return {
-            value: item,
-            label: disk.label
-          };
         });
 
         set(selectInstance, 'dataDisk', dataDiskChoices)
