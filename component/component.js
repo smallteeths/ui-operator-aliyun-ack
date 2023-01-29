@@ -68,14 +68,14 @@ const MODES = [
 ];
 
 const DISKS = [
-  {
-    label: 'clusterNew.aliyunkcs.disk.cloud',
-    value: 'cloud'
-  },
-  {
-    label: 'clusterNew.aliyunkcs.disk.ephemeralSsd',
-    value: 'ephemeral_ssd'
-  },
+  // {
+  //   label: 'clusterNew.aliyunkcs.disk.cloud',
+  //   value: 'cloud'
+  // },
+  // {
+  //   label: 'clusterNew.aliyunkcs.disk.ephemeralSsd',
+  //   value: 'ephemeral_ssd'
+  // },
   {
     label: 'clusterNew.aliyunkcs.disk.ssd',
     value: 'cloud_ssd'
@@ -88,10 +88,10 @@ const DISKS = [
     label: 'clusterNew.aliyunkcs.disk.essd',
     value: 'cloud_essd'
   },
-  {
-    label: 'clusterNew.aliyunkcs.disk.cloudAuto',
-    value: 'cloud_auto'
-  },
+  // {
+  //   label: 'clusterNew.aliyunkcs.disk.cloudAuto',
+  //   value: 'cloud_auto'
+  // },
 ];
 
 const CLUSTER_TYPES = [
