@@ -92,7 +92,6 @@
         }}
       {{/if}}
       {{save-cancel
-        editing=(eq mode "edit")
         save=(action "aliyunLogin")
         cancel=close
         createLabel="clusterNew.aliyunkcs.access.next"
@@ -170,17 +169,12 @@
             <label class="acc-label">
               {{t "clusterNew.aliyunkcs.version.label"}}
             </label>
-            {{#if (and (eq step 2) (eq config.clusterType "Kubernetes"))}}
+            {{#if (and (eq step 2) (not isImportProvider))}}
               {{searchable-select
                 allowCustom=true
                 value=config.kubernetesVersion
                 content=versionChoices
-              }}
-            {{else if (and (eq step 2) (eq config.clusterType "ManagedKubernetes"))}}
-              {{searchable-select
-                allowCustom=true
-                value=config.kubernetesVersion
-                content=managedVersionChoices
+                change=(action "kubernetesVersionChange")
               }}
             {{else if config.kubernetesVersion}}
               <div>{{config.kubernetesVersion}}</div>
@@ -201,6 +195,13 @@
             <p>
               {{t "clusterNew.aliyunkcs.version.warningRacher" version=config.kubernetesVersion}}
               <a href="https://www.suse.com/suse-rancher/support-matrix/all-supported-versions/rancher-v2-7-0/" target="_blank">{{t "clusterNew.aliyunkcs.version.warningRancherTip"}}</a>
+            </p>
+          {{/banner-message}}
+        {{/if}}
+        {{#if isChangedK8sVersion}}
+          {{#banner-message color="bg-warning"}}
+            <p>
+              {{t "clusterNew.aliyunkcs.version.warningEdited" version=historyK8sVerison}}
             </p>
           {{/banner-message}}
         {{/if}}
@@ -347,10 +348,8 @@
           </div>
         </div>
       {{/accordion-list-item}}
-      {{#if isNew}}
         {{#if (and (eq step 2) (eq config.clusterType "Kubernetes"))}}
           {{save-cancel
-            editing=(eq mode "edit")
             save=(action "configMaster")
             cancel=close
             createLabel="clusterNew.aliyunkcs.cluster.next"
@@ -358,15 +357,13 @@
           }}
         {{else if (and (eq step 2) (eq config.clusterType "ManagedKubernetes"))}}
           {{save-cancel
-            editing=(eq mode "edit")
             save=(action "configWorker")
             cancel=close
             createLabel="clusterNew.aliyunkcs.master.next"
             savingLabel="clusterNew.aliyunkcs.master.loading"
           }}
         {{/if}}
-      {{/if}}
-      {{#if (and (or editing (gte step 3)) (eq config.clusterType "Kubernetes"))}}
+      {{#if (and (gte step 3) (eq config.clusterType "Kubernetes"))}}
       {{#accordion-list-item
         title=(t "clusterNew.aliyunkcs.master.title")
         detail=(t "clusterNew.aliyunkcs.master.detail")
@@ -526,7 +523,6 @@
       {{/accordion-list-item}}
       {{#if (eq step 3)}}
         {{save-cancel
-          editing=(eq mode "edit")
           save=(action "configWorker")
           cancel=close
           createLabel="clusterNew.aliyunkcs.master.next"
@@ -534,7 +530,7 @@
         }}
       {{/if}}
     {{/if}}
-    {{#if (or editing (gte step 4))}}
+    {{#if (gte step 4)}}
       {{#accordion-list-item
         title=(t "clusterNew.aliyunkcs.worker.title")
         detail=(t "clusterNew.aliyunkcs.worker.detail")
@@ -567,7 +563,7 @@
                   style="background:transparent"
                   class="btn bg-transparent text-small vertical-middle"
                   type="button"
-                  disabled={{and (not index) (eq nodePool.name 'default-nodepool')}}
+                  disabled={{or isImportProvider isChangedK8sVersion (and (not index) (eq nodePool.name 'default-nodepool'))}}
                   {{action 'removeNodePool' nodePool}}
                 >
                   {{t "nodeGroupRow.remove.label"}}
@@ -595,7 +591,7 @@
                 </label>
 
                 {{#input-or-display
-                  editable=(not isImportProvider)
+                  editable=(not (or isImportProvider isChangedK8sVersion))
                   value=nodePool.instances_num
                 }}
                 {{#if (eq nodePool.name 'default-nodepool')}}
@@ -743,7 +739,7 @@
             <button
               class="btn bg-link icon-btn pull-left"
               type="button"
-              disabled={{not instanceChoices.length}}
+              disabled={{or isChangedK8sVersion (not instanceChoices.length)}}
               {{action "addNodePool"}}
             >
               <i class="icon icon-plus text-small"></i>

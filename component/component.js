@@ -289,7 +289,6 @@ export default Ember.Component.extend(ClusterDriver, {
 
   step:                  1,
   versionChoices:        VERSIONS,
-  managedVersionChoices: VERSIONS,
   nodeCidrMaskChoices:   NODECIDRMASKS,
 
   workerPeriodUnit:                PERIODUNIT,
@@ -310,10 +309,12 @@ export default Ember.Component.extend(ClusterDriver, {
   workerInstanceType:    '',
   masterInstanceType:    '',
   vswitchId:             '',
+  historyK8sVerison:     '',
 
   editing:               equal('mode', 'edit'),
   isNew:                 equal('mode', 'new'),
   isActive:              equal('cluster.state', 'active'),
+  isChangedK8sVersion:   false,
   masterNumChoices:      MASTER,
   nodePoolList:          [],
   clusterChoices:        [],
@@ -400,6 +401,7 @@ export default Ember.Component.extend(ClusterDriver, {
           displaySystemDiskCategory: this.getDiskLabel(item.system_disk_category),
         }
       }));
+      set(this, 'historyK8sVerison', config.kubernetesVersion);
     }
   },
   /* !!!!!!!!!!!DO NOT CHANGE END!!!!!!!!!!!*/
@@ -436,8 +438,6 @@ export default Ember.Component.extend(ClusterDriver, {
         if (this.isImportProvider && this.isNew){
           set(this, 'step', 1.5);
           cb && cb(true);
-        } else if (this.editing){
-          this.getConfigWorkerChoices(cb);
         } else {
           set(this, 'step', 2);
           cb && cb(true);
@@ -542,6 +542,14 @@ export default Ember.Component.extend(ClusterDriver, {
       }
 
       this.getConfigWorkerChoices(cb);
+    },
+
+    kubernetesVersionChange(val){
+      if(this.editing && val !== get(this, 'historyK8sVerison')){
+        set(this, 'isChangedK8sVersion', true);
+      } else {
+        set(this, 'isChangedK8sVersion', false);
+      }
     },
 
     save(cb) {
