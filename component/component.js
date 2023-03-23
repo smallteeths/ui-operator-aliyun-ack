@@ -314,6 +314,7 @@ export default Ember.Component.extend(ClusterDriver, {
   editing:               equal('mode', 'edit'),
   isNew:                 equal('mode', 'new'),
   isActive:              equal('cluster.state', 'active'),
+  isUpdating:            equal('cluster.state', 'updating'),
   isChangedK8sVersion:   false,
   masterNumChoices:      MASTER,
   nodePoolList:          [],
@@ -545,7 +546,7 @@ export default Ember.Component.extend(ClusterDriver, {
     },
 
     kubernetesVersionChange(val){
-      if(this.editing && val !== get(this, 'historyK8sVerison')){
+      if(this.editing && val !== get(this, 'historyK8sVerison') && get(val, 'value') !== get(this, 'historyK8sVerison')){
         set(this, 'isChangedK8sVersion', true);
       } else {
         set(this, 'isChangedK8sVersion', false);
@@ -960,6 +961,14 @@ export default Ember.Component.extend(ClusterDriver, {
     return list.every((item) => {
       return item.nodepool_id;
     })
+  }),
+
+  isK8sVersionError: computed('isNew', 'isUpdating', 'cluster.transitioningMessage', function() {
+    if( !get(this, 'isNew') && get(this, 'isUpdating')){
+      return get(this, 'cluster.transitioningMessage', '').includes('Please check that the version of k8s to be upgraded is entered correctly')
+    }
+
+    return false;
   }),
 
   minNumOfNodes: computed('config.clusterType', function() {

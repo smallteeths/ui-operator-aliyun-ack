@@ -96,7 +96,7 @@
         cancel=close
         createLabel="clusterNew.aliyunkcs.access.next"
         savingLabel="clusterNew.aliyunkcs.access.loading"
-        saveDisabled=(or (not primaryResource.cloudCredentialId) (not nodePoolActive) (and (not isNew) (not isActive)))
+        saveDisabled=(or (not primaryResource.cloudCredentialId) (not nodePoolActive) (and (not isNew) (not isActive) (not isK8sVersionError)))
       }}
     {{/if}}
     {{#if (gte step 2)}}
