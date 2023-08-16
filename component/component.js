@@ -361,7 +361,6 @@ export default Ember.Component.extend(ClusterDriver, {
           name:                     null,
           displayName:              null,
           regionId:                 'cn-beijing',
-          zoneId:                   null,
           serviceCidr:              '172.21.0.0/20',
           nodeCidrMask:             '26',
           snatEntry:                true,
@@ -747,17 +746,6 @@ export default Ember.Component.extend(ClusterDriver, {
           }
         }
       });
-      this.fetch('Zone', 'Zones', { regionId: get(this, 'config.regionId') }).then((zones) => {
-        set(this, 'zoneChoices', zones);
-
-        if (get(this, 'config.zoneId')) {
-          const found = zones.findBy('value', get(this, 'config.zoneId'));
-
-          if (!found) {
-            set(this, 'config.zoneId', null);
-          }
-        }
-      });
     }
   }),
 
@@ -840,14 +828,11 @@ export default Ember.Component.extend(ClusterDriver, {
       const found = get(this, 'vswitches').findBy('value', selectedVSwitch);
 
       if (!found) {
-        set(this, 'config.zoneId', null);
         set(this, 'config.masterVswitchIds', null);
       } else {
-        set(this, 'config.zoneId', found.raw.ZoneId);
         set(this, 'config.masterVswitchIds', [selectedVSwitch, selectedVSwitch, selectedVSwitch]);
       }
     } else {
-      set(this, 'config.zoneId', null);
       set(this, 'config.masterVswitchIds', null);
     }
   }),
@@ -973,12 +958,6 @@ export default Ember.Component.extend(ClusterDriver, {
 
   minNumOfNodes: computed('config.clusterType', function() {
     return get(this, 'config.clusterType') === KUBERNETES ? 0 : 1;
-  }),
-
-  selectedZone: computed('config.zoneId', 'zoneChoices', function() {
-    const zoneChoices = get(this, 'zoneChoices') || [];
-
-    return zoneChoices.findBy('value', get(this, 'config.zoneId'));
   }),
 
   clusterTypeChoices: computed('config.regionId', 'zoneChoices', function() {
@@ -1258,7 +1237,6 @@ export default Ember.Component.extend(ClusterDriver, {
     return new EmberPromise((resolve, reject) => {
       this.fetch('', 'AvailableResource', {
         regionId:             get(this, 'config.regionId'),
-        zoneId:               get(this, 'config.zoneId'),
         instanceChargeType:   get(this, 'config.masterInstanceChargeType'),
         networkCategory:      'vpc',
         destinationResource:  'InstanceType'
@@ -1286,7 +1264,6 @@ export default Ember.Component.extend(ClusterDriver, {
     this.fetch('', 'AvailableResource', {
       instanceType,
       regionId:             get(this, 'config.regionId'),
-      zoneId:               get(this, 'config.zoneId'),
       instanceChargeType:   get(this, 'config.masterInstanceChargeType'),
       networkCategory:      'vpc',
       ioOptimized:          'optimized',
@@ -1338,7 +1315,6 @@ export default Ember.Component.extend(ClusterDriver, {
       this.fetch('', 'AvailableResource', {
         instanceType,
         regionId:             get(this, 'config.regionId'),
-        zoneId:               get(this, 'config.zoneId'),
         instanceChargeType:   get(this, 'config.masterInstanceChargeType'),
         networkCategory:      'vpc',
         systemDiskCategory:   get(this, 'nodePoolList.firstObject.system_disk_category'),
