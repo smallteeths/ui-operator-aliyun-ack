@@ -232,19 +232,39 @@ const PERIODS = [
 
 const PLATFORMTYPES = [
   {
-    label:  'CentOS 7.7',
-    value:  'CentOS',
+    label: 'CentOS',
+    value: 'CentOS',
     osType: 'Linux'
   },
   {
-    label:  'AliyunLinux',
+    label:  'Alibaba Cloud Linux 2.1903',
     value:  'AliyunLinux',
     osType: 'Linux'
   },
   {
-    label:   'Windows Server 2019',
-    value:   'Windows',
-    osType:  'Windows',
+    label: 'Alibaba Cloud Linux 3.2104',
+    value: 'AliyunLinux3',
+    osType: 'Linux'
+  },
+  {
+    label: 'Alibaba Cloud Linux  3.2104 LTS 64 bit ARM Edition',
+    value: 'AliyunLinux3Arm64',
+    osType: 'Linux'
+  },
+  {
+    label: 'Alibaba Cloud Linux UEFI 3.2104 Security Enhanced',
+    value: 'AliyunLinuxUEFI',
+    osType: 'Linux'
+  },
+  {
+    label: 'ContainerOS 3.1',
+    value: 'ContainerOS',
+    osType: 'ContainerOS'
+  },
+  {
+    label: 'Windows Server 2019',
+    value: 'Windows',
+    osType: 'Windows',
     managed: true
   },
   {
