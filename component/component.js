@@ -28,14 +28,15 @@ const defaultBase  = 1024;
 
 const languages = LANGUAGE;
 const PAGE_SIZE = 50;
-const K8S_1_26_3 = '1.26.3-aliyun.1';
+
+const K8S_1_26_15 = '1.26.15-aliyun.1';
 const K8S_1_24_6 = '1.24.6-aliyun.1';
-const K8S_1_22_15 = '1.22.15-aliyun.1';
+const K8S_1_28_9 = '1.28.9-aliyun.1';
 
 const VERSIONS = [
   {
-    value:          K8S_1_26_3,
-    label:          K8S_1_26_3,
+    value:          K8S_1_26_15,
+    label:          K8S_1_26_15,
     rancherEnabled: true,
     aliyunEnabled:  true,
   },
@@ -46,13 +47,13 @@ const VERSIONS = [
     aliyunEnabled:  true,
   },
   {
-    value:          K8S_1_22_15,
-    label:          K8S_1_22_15,
+    value:          K8S_1_28_9,
+    label:          K8S_1_28_9,
     rancherEnabled: false,
     aliyunEnabled:  true,
   },
 ];
-const DEFAULT_KUBERNETES_VERSION = K8S_1_26_3;
+const DEFAULT_KUBERNETES_VERSION = K8S_1_24_6;
 const KUBERNETES = 'Kubernetes';
 const MANAGED = 'ManagedKubernetes';
 
@@ -232,19 +233,39 @@ const PERIODS = [
 
 const PLATFORMTYPES = [
   {
-    label:  'CentOS 7.7',
-    value:  'CentOS',
+    label: 'CentOS',
+    value: 'CentOS',
     osType: 'Linux'
   },
   {
-    label:  'AliyunLinux',
+    label:  'Alibaba Cloud Linux 2.1903',
     value:  'AliyunLinux',
     osType: 'Linux'
   },
   {
-    label:   'Windows Server 2019',
-    value:   'Windows',
-    osType:  'Windows',
+    label: 'Alibaba Cloud Linux 3.2104',
+    value: 'AliyunLinux3',
+    osType: 'Linux'
+  },
+  {
+    label: 'Alibaba Cloud Linux  3.2104 LTS 64 bit ARM Edition',
+    value: 'AliyunLinux3Arm64',
+    osType: 'Linux'
+  },
+  {
+    label: 'Alibaba Cloud Linux UEFI 3.2104 Security Enhanced',
+    value: 'AliyunLinuxUEFI',
+    osType: 'Linux'
+  },
+  {
+    label: 'ContainerOS 3.1',
+    value: 'ContainerOS',
+    osType: 'ContainerOS'
+  },
+  {
+    label: 'Windows Server 2019',
+    value: 'Windows',
+    osType: 'Windows',
     managed: true
   },
   {
