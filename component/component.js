@@ -28,21 +28,20 @@ const defaultBase  = 1024;
 
 const languages = LANGUAGE;
 const PAGE_SIZE = 50;
-const K8S_1_28_3 = '1.28.3-aliyun.1';
-const K8S_1_26_3 = '1.26.3-aliyun.1';
+const K8S_1_26_15 = '1.26.15-aliyun.1';
 const K8S_1_24_6 = '1.24.6-aliyun.1';
-const K8S_1_22_15 = '1.22.15-aliyun.1';
+const K8S_1_28_9 = '1.28.9-aliyun.1';
 
 const VERSIONS = [
   {
-    value:          K8S_1_28_3,
-    label:          K8S_1_28_3,
+    value:          K8S_1_28_9,
+    label:          K8S_1_28_9,
     rancherEnabled: true,
     aliyunEnabled:  true,
   },
   {
-    value:          K8S_1_26_3,
-    label:          K8S_1_26_3,
+    value:          K8S_1_26_15,
+    label:          K8S_1_26_15,
     rancherEnabled: true,
     aliyunEnabled:  true,
   },
@@ -52,14 +51,8 @@ const VERSIONS = [
     rancherEnabled: false,
     aliyunEnabled:  true,
   },
-  {
-    value:          K8S_1_22_15,
-    label:          K8S_1_22_15,
-    rancherEnabled: false,
-    aliyunEnabled:  false,
-  },
 ];
-const DEFAULT_KUBERNETES_VERSION = K8S_1_28_3;
+const DEFAULT_KUBERNETES_VERSION = K8S_1_28_9;
 const KUBERNETES = 'Kubernetes';
 const MANAGED = 'ManagedKubernetes';
 
