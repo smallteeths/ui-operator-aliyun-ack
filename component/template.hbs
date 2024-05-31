@@ -8,15 +8,70 @@
       expandOnInit=true
     }}
       {{#if (eq step 1)}}
-        {{form-auth-cloud-credential
-          cloudCredentials=cloudCredentials
-          driverName=cloudCredentialDriverName
-          parseAndCollectErrors=(action "errorHandler")
-          finishAndSelectCloudCredential=(action "finishAndSelectCloudCredential")
-          primaryResource=primaryResource
-          region=config.region
-          hideSave=true
-        }}
+        <div class="mb-20 has-tabs">
+          <ul class="tab-nav">
+            <li>
+              <a
+                class={{concat (unless isSTSToken "active" ) " ember-view hand"}}
+                {{action "switchTab" false}}
+              >
+                Credential
+              </a>
+            </li>
+            <li>
+              <a
+                class={{concat (if isSTSToken "active" ) " ember-view hand"}}
+                {{action "switchTab" true}}
+              >
+                STS Token
+              </a>
+            </li>
+          </ul>
+        </div>
+        {{#if isSTSToken}}
+          <div class="row" style="padding: 10px;">
+            <div class="col span-12">
+              <label class="acc-label">
+                Account ID{{field-required}}
+              </label>
+              {{#input-or-display
+                editable=(eq step 1)
+                value=config.account_id
+              }}
+                {{input
+                  type="text"
+                  class="form-control"
+                  value=config.account_id
+                }}
+              {{/input-or-display}}
+            </div>
+            <div class="col span-12">
+              <label class="acc-label">
+                Role Name{{field-required}}
+              </label>
+              {{#input-or-display
+                editable=(eq step 1)
+                value=config.role_name
+              }}
+                {{input
+                  type="text"
+                  class="form-control"
+                  value=config.role_name
+                }}
+              {{/input-or-display}}
+            </div>
+          </div>
+        {{else}}
+          {{form-auth-cloud-credential
+            cloudCredentials=cloudCredentials
+            driverName=cloudCredentialDriverName
+            parseAndCollectErrors=(action "errorHandler")
+            finishAndSelectCloudCredential=(action "finishAndSelectCloudCredential")
+            primaryResource=primaryResource
+            region=config.region
+            hideSave=true
+          }}
+        {{/if}}
       {{else}}
         <div class="row">
           <div class="col span-4">
@@ -96,7 +151,7 @@
         cancel=close
         createLabel="clusterNew.aliyunkcs.access.next"
         savingLabel="clusterNew.aliyunkcs.access.loading"
-        saveDisabled=(or (not primaryResource.cloudCredentialId) (not nodePoolActive) (and (not isNew) (not isActive) (not isK8sVersionError)))
+        saveDisabled=(or (and (not isSTSToken) (not primaryResource.cloudCredentialId)) (not nodePoolActive) (and (not isNew) (not isActive) (not isK8sVersionError)))
       }}
     {{/if}}
     {{#if (gte step 2)}}

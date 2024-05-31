@@ -343,6 +343,7 @@ export default Ember.Component.extend(ClusterDriver, {
 
   cloudCredentialDriverName: 'aliyun',
   config:                    null,
+  isSTSToken:            false,
 
   init() {
     // This does on the fly template compiling, if you mess with this :cry:
@@ -367,6 +368,8 @@ export default Ember.Component.extend(ClusterDriver, {
           cluster_id:               null,
           cluster_name:             null,
           regionId:                 'cn-beijing',
+          account_id:               '',
+          role_name:                '',
         });
       } else {
         config = this.get('globalStore').createRecord({
@@ -394,6 +397,8 @@ export default Ember.Component.extend(ClusterDriver, {
           masterCount:              3,
           osType:                   'Linux',
           resourceGroupId:          '',
+          account_id:               '',
+          role_name:                '',
         });
 
         set(this, 'nodePoolList', [{
@@ -587,11 +592,15 @@ export default Ember.Component.extend(ClusterDriver, {
 
       config.aliyun_credential_secret = aliyun_credential_secret;
 
+      if (get(this, 'isSTSToken')) {
+        config.aliyun_credential_secret = ""
+      }
+
       if ( !clusterName ) {
         errors.push(intl.t('clusterNew.aliyunkcs.cluster.name.required'));
       }
 
-      if ( !config.aliyun_credential_secret ) {
+      if ( !config.aliyun_credential_secret && !get(this, 'isSTSToken')) {
         errors.push(intl.t('nodeDriver.cloudCredentialError'));
       }
 
@@ -685,6 +694,13 @@ export default Ember.Component.extend(ClusterDriver, {
         this.send('aliyunLogin');
       }
     },
+    switchTab(record) {
+      set(this, 'isSTSToken', record)
+      if (!record) {
+        set(this, 'config.account_id', "")
+        set(this, 'config.role_name', "")
+      }
+    }
   },
 
   languageDidChanged: observer('intl.locale', function() {
@@ -733,7 +749,11 @@ export default Ember.Component.extend(ClusterDriver, {
     }
     const intl = get(this, 'intl');
     const resourceGroupId = get(this, 'config.resourceGroupId');
-    const externalParams = { regionId: get(this, 'config.regionId'), };
+    const externalParams = {
+      regionId: get(this, 'config.regionId'),
+      accountId: get(this, 'config.account_id'),
+      roleName: get(this, 'config.role_name'),
+    };
 
     if (!!resourceGroupId && resourceGroupId !== '') {
       externalParams.resourceGroupId = resourceGroupId;
@@ -776,6 +796,8 @@ export default Ember.Component.extend(ClusterDriver, {
     const externalParams = {
       regionId: get(this, 'config.regionId'),
       vpcId:    get(this, 'config.vpcId'),
+      accountId: get(this, 'config.account_id'),
+      roleName: get(this, 'config.role_name'),
     };
 
     if (!!resourceGroupId && resourceGroupId !== '') {
@@ -1120,7 +1142,11 @@ export default Ember.Component.extend(ClusterDriver, {
   },
 
   setInstances(type) {
-    const externalParams = { regionId: get(this, 'config.regionId'), };
+    const externalParams = {
+      regionId: get(this, 'config.regionId'),
+      accountId: get(this, 'config.account_id'),
+      roleName: get(this, 'config.role_name'),
+    };
 
     if (type === 'master') {
       set(externalParams, 'instanceChargeType', get(this, 'config.masterInstanceChargeType'));
@@ -1167,7 +1193,7 @@ export default Ember.Component.extend(ClusterDriver, {
         .catch((err) => {
           const errors = get(this, 'errors') || [];
 
-          errors.pushObject(err.message || get(err, 'body.detail') || err);
+          errors.pushObject(err.message || get(err, 'body.error') || err);
           set(this, 'errors', errors);
           reject();
 
@@ -1178,7 +1204,11 @@ export default Ember.Component.extend(ClusterDriver, {
 
   setKeyPairs() {
     const resourceGroupId = get(this, 'config.resourceGroupId');
-    const externalParams = { regionId: get(this, 'config.regionId'), };
+    const externalParams = {
+      regionId: get(this, 'config.regionId'),
+      accountId: get(this, 'config.account_id'),
+      roleName: get(this, 'config.role_name'),
+    };
 
     if (!!resourceGroupId && resourceGroupId !== '') {
       externalParams.resourceGroupId = resourceGroupId;
@@ -1194,16 +1224,14 @@ export default Ember.Component.extend(ClusterDriver, {
       if ( !get(this, 'config.keyPair') && get(this, 'keyChoices.length') ) {
         set(this, 'config.keyPair', get(this, 'keyChoices.firstObject.value'));
       }
-    }).catch((err) => {
-      const errors = get(this, 'errors') || [];
-
-      errors.pushObject(err.message || get(err, 'body.detail') || err);
-      set(this, 'errors', errors);
-    });
+    })
   },
 
   async fetchResourceGroups() {
-    const groups = await this.fetch('ResourceGroup', 'ResourceGroups');
+    const groups = await this.fetch('ResourceGroup', 'ResourceGroups', {
+      accountId: get(this, 'config.account_id'),
+      roleName: get(this, 'config.role_name'),
+    });
 
     set(this, 'resourceGroups', groups.map((group) => {
       return {
@@ -1215,7 +1243,10 @@ export default Ember.Component.extend(ClusterDriver, {
   },
 
   async fetchRegions() {
-    const regions = await this.fetch('Region', 'Regions');
+    const regions = await this.fetch('Region', 'Regions', {
+      accountId: get(this, 'config.account_id'),
+      roleName: get(this, 'config.role_name'),
+    });
     const transformRegions = [];
 
     REGIONS.forEach((regionTemp) => {
@@ -1236,7 +1267,11 @@ export default Ember.Component.extend(ClusterDriver, {
 
   async fetchCluster() {
     const regionId = get(this, 'config.regionId');
-    const clusters = await this.fetch('', 'cluster', { regionId, });
+    const clusters = await this.fetch('', 'cluster', {
+      regionId,
+      accountId: get(this, 'config.account_id'),
+      roleName: get(this, 'config.role_name'),
+    });
 
     set(this, 'clusterChoices', (get(clusters, 'clusters') || []).map((item, index) => {
       if (index === 0){
@@ -1259,7 +1294,9 @@ export default Ember.Component.extend(ClusterDriver, {
         regionId:             get(this, 'config.regionId'),
         instanceChargeType:   get(this, 'config.masterInstanceChargeType'),
         networkCategory:      'vpc',
-        destinationResource:  'InstanceType'
+        destinationResource:  'InstanceType',
+        accountId: get(this, 'config.account_id'),
+        roleName: get(this, 'config.role_name'),
       }).then((res) => {
         results = this.getAvailableResources(res);
         resolve(results);
@@ -1287,7 +1324,9 @@ export default Ember.Component.extend(ClusterDriver, {
       instanceChargeType:   get(this, 'config.masterInstanceChargeType'),
       networkCategory:      'vpc',
       ioOptimized:          'optimized',
-      destinationResource:  'SystemDisk'
+      destinationResource:  'SystemDisk',
+      accountId: get(this, 'config.account_id'),
+      roleName: get(this, 'config.role_name'),
     }).then((res) => {
       results = this.getAvailableResources(res);
 
@@ -1339,7 +1378,9 @@ export default Ember.Component.extend(ClusterDriver, {
         networkCategory:      'vpc',
         systemDiskCategory:   get(this, 'nodePoolList.firstObject.system_disk_category'),
         ioOptimized:          'optimized',
-        destinationResource:  'DataDisk'
+        destinationResource:  'DataDisk',
+        accountId: get(this, 'config.account_id'),
+        roleName: get(this, 'config.role_name'),
       }).then((res) => {
         results = this.getAvailableResources(res) || [];
         const dataDiskChoices = [];
@@ -1466,7 +1507,7 @@ export default Ember.Component.extend(ClusterDriver, {
       acceptLanguage = 'en-US';
     }
 
-    const cloudCredentialId = get(this, 'primaryResource.cloudCredentialId');
+    const cloudCredentialId = get(this, 'isSTSToken') ? '' : get(this, 'primaryResource.cloudCredentialId');
     const results = [];
     const location = window.location;
     let req = {};
@@ -1486,7 +1527,7 @@ export default Ember.Component.extend(ClusterDriver, {
     };
 
     return new EmberPromise((resolve, reject) => {
-      if (!cloudCredentialId){
+      if (!cloudCredentialId && !query.accountId && !query.roleName){
         // console.error(`${resourceName}: "cloudCredentialId" not found`)
         return resolve(results);
       }
@@ -1512,13 +1553,20 @@ export default Ember.Component.extend(ClusterDriver, {
               resolve(results);
             })
             .catch((err) => {
-              reject(get(err, 'body.detail') || err);
+              reject(get(err, 'body.error') || err);
             });
         } else {
           resolve(results);
         }
       }).catch((err) => {
-        reject(get(err, 'body.detail') || err);
+        const errors = get(this, 'errors') || [];
+
+        errors.pushObject(err.message || get(err, 'body.error') || get(err, 'body.message') || err);
+        const uniqueErrors = [...new Set(errors)];
+
+        // Set the errors with unique values
+        set(this, 'errors', uniqueErrors);
+        reject(get(err, 'body.error') || err);
       });
     });
   },
