@@ -29,8 +29,8 @@ const defaultBase  = 1024;
 const languages = LANGUAGE;
 const PAGE_SIZE = 50;
 const K8S_1_26_15 = '1.26.15-aliyun.1';
-const K8S_1_24_6 = '1.24.6-aliyun.1';
 const K8S_1_28_9 = '1.28.9-aliyun.1';
+const K8S_1_30_1 = '1.30.1-aliyun.1';
 
 const VERSIONS = [
   {
@@ -46,8 +46,8 @@ const VERSIONS = [
     aliyunEnabled:  true,
   },
   {
-    value:          K8S_1_24_6,
-    label:          K8S_1_24_6,
+    value:          K8S_1_30_1,
+    label:          K8S_1_30_1,
     rancherEnabled: false,
     aliyunEnabled:  true,
   },
