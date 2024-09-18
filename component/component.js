@@ -49,7 +49,7 @@ const VERSIONS = [
   {
     value:          K8S_1_26_15,
     label:          K8S_1_26_15,
-    rancherEnabled: true,
+    rancherEnabled: false,
     aliyunEnabled:  true,
   },
   {
