@@ -30,36 +30,31 @@ const languages = LANGUAGE;
 const PAGE_SIZE = 50;
 const K8S_1_26_15 = '1.26.15-aliyun.1';
 const K8S_1_24_6 = '1.24.6-aliyun.1';
-const K8S_1_28_9 = '1.28.9-aliyun.1';
-const K8S_1_30_1 = '1.30.1-aliyun.1';
+const K8S_1_28_15 = '1.28.15-aliyun.1';
+const K8S_1_30_7 = '1.30.7-aliyun.1';
+const K8S_1_31_1 = '1.31.1-aliyun.1';
 
 const VERSIONS = [
   {
-    value:          K8S_1_30_1,
-    label:          K8S_1_30_1,
+    value:          K8S_1_31_1,
+    label:          K8S_1_31_1,
     rancherEnabled: true,
     aliyunEnabled:  true,
   },
   {
-    value:          K8S_1_28_9,
-    label:          K8S_1_28_9,
+    value:          K8S_1_30_7,
+    label:          K8S_1_30_7,
     rancherEnabled: true,
     aliyunEnabled:  true,
   },
   {
-    value:          K8S_1_26_15,
-    label:          K8S_1_26_15,
-    rancherEnabled: false,
-    aliyunEnabled:  true,
-  },
-  {
-    value:          K8S_1_24_6,
-    label:          K8S_1_24_6,
-    rancherEnabled: false,
+    value:          K8S_1_28_15,
+    label:          K8S_1_28_15,
+    rancherEnabled: true,
     aliyunEnabled:  true,
   },
 ];
-const DEFAULT_KUBERNETES_VERSION = K8S_1_30_1;
+const DEFAULT_KUBERNETES_VERSION = K8S_1_31_1;
 const KUBERNETES = 'Kubernetes';
 const MANAGED = 'ManagedKubernetes';
 
