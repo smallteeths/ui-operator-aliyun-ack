@@ -340,14 +340,21 @@
           </div>
         </div>
       {{/accordion-list-item}}
-        {{#if (and (eq step 2) (eq config.clusterType "Kubernetes"))}}
+        {{#if (and (eq step 2) isImportProvider)}}
+          {{save-cancel
+            editing=(eq mode "edit")
+            save=(action "registerCluster")
+            cancel=close
+          }}
+        {{/if}}
+        {{#if (and (eq step 2) (not isImportProvider) (eq config.clusterType "Kubernetes"))}}
           {{save-cancel
             save=(action "configMaster")
             cancel=close
             createLabel="clusterNew.aliyunkcs.cluster.next"
             savingLabel="clusterNew.aliyunkcs.cluster.loading"
           }}
-        {{else if (and (eq step 2) (eq config.clusterType "ManagedKubernetes"))}}
+        {{else if (and (eq step 2) (not isImportProvider) (eq config.clusterType "ManagedKubernetes"))}}
           {{save-cancel
             save=(action "configWorker")
             cancel=close
