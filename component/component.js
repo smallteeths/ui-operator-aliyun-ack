@@ -1050,8 +1050,10 @@ export default Ember.Component.extend(ClusterDriver, {
   isImportProvider: computed('router.currentRoute.queryParams', 'config.imported', function() {
     const { router } = this;
     const imported = get(this, 'config.imported');
-
-    return imported || !!get(router, 'currentRoute.queryParams.importProvider');
+    if (get(this, 'isNew')) {
+      return imported || !!get(router, 'currentRoute.queryParams.importProvider');
+    }
+    return imported
   }),
 
   cloudCredentials: computed('model.cloudCredentials', function() {
