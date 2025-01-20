@@ -107,74 +107,6 @@ const CLUSTER_TYPES = [
   }
 ];
 
-const REGIONS = [
-  {
-    label:   'cn-beijing',
-    value:   'cn-beijing',
-    managed: true,
-  }, {
-    label: 'cn-zhangjiakou',
-    value: 'cn-zhangjiakou'
-  }, {
-    label: 'cn-huhehaote',
-    value: 'cn-huhehaote'
-  }, {
-    label:   'cn-hangzhou',
-    value:   'cn-hangzhou',
-    managed: true,
-  }, {
-    label:   'cn-shanghai',
-    value:   'cn-shanghai',
-    managed: true,
-  }, {
-    label: 'cn-shenzhen',
-    value: 'cn-shenzhen'
-  }, {
-    label: 'cn-chengdu',
-    value: 'cn-chengdu'
-  }, {
-    label: 'cn-hongkong',
-    value: 'cn-hongkong'
-  }, {
-    label: 'ap-northeast-1',
-    value: 'ap-northeast-1'
-  }, {
-    label:   'ap-south-1',
-    value:   'ap-south-1',
-    managed: true,
-  }, {
-    label:   'ap-southeast-1',
-    value:   'ap-southeast-1',
-    managed: true,
-  }, {
-    label: 'ap-southeast-2',
-    value: 'ap-southeast-2'
-  }, {
-    label:   'ap-southeast-3',
-    value:   'ap-southeast-3',
-    managed: true,
-  }, {
-    label:   'ap-southeast-5',
-    value:   'ap-southeast-5',
-    managed: true,
-  }, {
-    label: 'us-east-1',
-    value: 'us-east-1'
-  }, {
-    label: 'us-west-1',
-    value: 'us-west-1'
-  }, {
-    label:   'me-east-1',
-    value:   'me-east-1',
-    managed: false
-  }, {
-    label: 'eu-west-1',
-    value: 'eu-west-1'
-  }, {
-    label: 'eu-central-1',
-    value: 'eu-central-1'
-  }];
-
 const NODECIDRMASKS = [
   {
     label: 16,
@@ -320,6 +252,7 @@ export default Ember.Component.extend(ClusterDriver, {
   zoneChoices:           [],
   systemDiskChoices:     [],
   dataDiskChoices:       [],
+  clusterTypeChoices:    CLUSTER_TYPES,
   proxyModeChoices:      MODES,
   resourceGroups:        null,
   storageDiskChoices:    null,
@@ -376,7 +309,7 @@ export default Ember.Component.extend(ClusterDriver, {
           accessKeyId:              null,
           accessKeySecret:          null,
           addons:                   [{ name: 'flannel' }],
-          clusterType:              KUBERNETES,
+          clusterType:              MANAGED,
           containerCidr:            '172.20.0.0/16',
           kubernetesVersion:        DEFAULT_KUBERNETES_VERSION,
           proxyMode:                'ipvs',
@@ -982,16 +915,6 @@ export default Ember.Component.extend(ClusterDriver, {
     return get(this, 'config.clusterType') === KUBERNETES ? 0 : 1;
   }),
 
-  clusterTypeChoices: computed('config.regionId', 'zoneChoices', function() {
-    const region = REGIONS.findBy('value', get(this, 'config.regionId'));
-
-    if ( region && get(region, 'managed') !== false ) {
-      return CLUSTER_TYPES;
-    } else {
-      return CLUSTER_TYPES.filter((type) => get(type, 'value') !== MANAGED);
-    }
-  }),
-
   masterInstanceChargeTypeChoices: computed('intl.locale', function() {
     const intl = get(this, 'intl');
 
@@ -1077,7 +1000,7 @@ export default Ember.Component.extend(ClusterDriver, {
   showRegion: computed('regionChoices', 'config.regionId', function() {
     return this.getChoicesLabel(get(this, 'regionChoices'), get(this, 'config.regionId'))
   }),
-  showClusterType: computed('clusterTypeChoices', 'config.clusterType', function() {
+  showClusterType: computed('config.clusterType', function() {
     return this.getChoicesLabel(get(this, 'clusterTypeChoices'), get(this, 'config.clusterType'))
   }),
   showMasterInstanceChargeType: computed('masterInstanceChargeTypeChoices', 'config.masterInstanceChargeType', function() {
@@ -1220,20 +1143,17 @@ export default Ember.Component.extend(ClusterDriver, {
     const regions = await this.fetch('Region', 'Regions');
     const transformRegions = [];
 
-    REGIONS.forEach((regionTemp) => {
-      const found = regions.findBy('value', get(regionTemp, 'value'));
-
-      if (found) {
+    regions.forEach((regionTemp) => {
+      if (regionTemp?.raw?.LocalName) {
         transformRegions.pushObject({
           ...regionTemp,
-          label: found.raw.LocalName
+          label: regionTemp.raw.LocalName
         });
       } else {
-        transformRegions.pushObject(regionTemp);
+        transformRegions.pushObject(regionTemp)
       }
-
-      set(this, 'regionChoices', transformRegions);
     });
+    set(this, 'regionChoices', transformRegions);
   },
 
   async fetchCluster() {
