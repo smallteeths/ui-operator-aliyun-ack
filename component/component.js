@@ -57,7 +57,19 @@ const VERSIONS = [
 const DEFAULT_KUBERNETES_VERSION = K8S_1_31_1;
 const KUBERNETES = 'Kubernetes';
 const MANAGED = 'ManagedKubernetes';
+const ACK_CLUSTER_SPEC_STANDARD = 'ack.standard'
+const ACK_CLUSTER_SPEC_PRO = 'ack.pro.small'
 
+const ACK_CNI_OPTIONS = [
+  {
+    value: 'flannel',
+    label: 'Flannel',
+  },
+  {
+    value: 'terway-eniip',
+    label: 'Terway',
+  }
+]
 const MODES = [
   {
     value: 'iptables',
@@ -98,13 +110,26 @@ const DISKS = [
 
 const CLUSTER_TYPES = [
   {
-    label: 'clusterNew.aliyunkcs.clusters.k8s',
-    value: KUBERNETES
-  },
-  {
     label: 'clusterNew.aliyunkcs.clusters.managed',
     value: MANAGED
-  }
+  },
+  {
+    label: 'clusterNew.aliyunkcs.clusters.k8s',
+    value: KUBERNETES,
+    // aliyun unspport create Dedicated Kubernetes at 2024
+    disabled: true,
+  },
+];
+
+const ACK_CLUSTER_SPEC_OPTIONS = [
+  {
+    label: 'clusterNew.aliyunkcs.clusterSpec.standard',
+    value: ACK_CLUSTER_SPEC_STANDARD
+  },
+  {
+    label: 'clusterNew.aliyunkcs.clusterSpec.pro',
+    value: ACK_CLUSTER_SPEC_PRO,
+  },
 ];
 
 const NODECIDRMASKS = [
@@ -166,34 +191,34 @@ const PERIODS = [
 
 const PLATFORMTYPES = [
   {
-    label: 'CentOS',
-    value: 'CentOS',
-    osType: 'Linux'
-  },
-  {
-    label:  'Alibaba Cloud Linux 2.1903',
+    label:  'Alibaba Cloud Linux',
     value:  'AliyunLinux',
     osType: 'Linux'
   },
   {
-    label: 'Alibaba Cloud Linux 3.2104',
+    label: 'Alibaba Cloud Linux 3',
     value: 'AliyunLinux3',
     osType: 'Linux'
   },
   {
-    label: 'Alibaba Cloud Linux  3.2104 LTS 64 bit ARM Edition',
+    label: 'Alibaba Cloud Linux 3 ARM',
     value: 'AliyunLinux3Arm64',
     osType: 'Linux'
   },
   {
-    label: 'Alibaba Cloud Linux UEFI 3.2104 Security Enhanced',
+    label: 'Alibaba Cloud Linux UEFI 2 Security',
     value: 'AliyunLinuxUEFI',
     osType: 'Linux'
   },
   {
-    label: 'ContainerOS 3.1',
+    label: 'ContainerOS',
     value: 'ContainerOS',
     osType: 'ContainerOS'
+  },
+  {
+    label: 'CentOS',
+    value: 'CentOS',
+    osType: 'Linux'
   },
   {
     label: 'Windows Server 2019',
@@ -211,7 +236,7 @@ const PLATFORMTYPES = [
 
 const DEFAULT_NODE_GROUP_CONFIG = {
   name:                     'default-nodepool',
-  platform:                 'CentOS',
+  platform:                 'AliyunLinux3',
   system_disk_category:     'cloud_efficiency',
   system_disk_size:         120,
   size:                     120,
@@ -220,6 +245,8 @@ const DEFAULT_NODE_GROUP_CONFIG = {
   key_pair:                  null,
   instance_types:           '',
   type:                     'nodePool',
+  runtime:                  'containerd',
+  runtime_version:          '1.6.36'
 }
 
 const MASTER = [{
@@ -253,6 +280,8 @@ export default Ember.Component.extend(ClusterDriver, {
   systemDiskChoices:     [],
   dataDiskChoices:       [],
   clusterTypeChoices:    CLUSTER_TYPES,
+  clusterSpecChoices:    ACK_CLUSTER_SPEC_OPTIONS,
+  addonsCNIChoices:      ACK_CNI_OPTIONS,
   proxyModeChoices:      MODES,
   resourceGroups:        null,
   storageDiskChoices:    null,
@@ -275,6 +304,8 @@ export default Ember.Component.extend(ClusterDriver, {
   nodePoolList:          [],
   clusterChoices:        [],
   masterCount:           '3',
+  ackCNI:                'flannel',
+
 
   cloudCredentialDriverName: 'aliyun',
   config:                    null,
@@ -308,8 +339,8 @@ export default Ember.Component.extend(ClusterDriver, {
           type:                     'ackConfig',
           accessKeyId:              null,
           accessKeySecret:          null,
-          addons:                   [{ name: 'flannel' }],
           clusterType:              MANAGED,
+          clusterSpec:              ACK_CLUSTER_SPEC_STANDARD,
           containerCidr:            '172.20.0.0/16',
           kubernetesVersion:        DEFAULT_KUBERNETES_VERSION,
           proxyMode:                'ipvs',
@@ -329,6 +360,13 @@ export default Ember.Component.extend(ClusterDriver, {
           masterCount:              3,
           osType:                   'Linux',
           resourceGroupId:          '',
+          podVswitchIds:            [],
+          addons:                   [
+            {
+              name: 'flannel',
+              config: '',
+            }
+          ]
         });
 
         set(this, 'nodePoolList', [{
@@ -356,6 +394,11 @@ export default Ember.Component.extend(ClusterDriver, {
           displaySystemDiskCategory: this.getDiskLabel(item.system_disk_category),
         }
       }));
+      const addons = get(this, 'config.addons');
+      const cni = addons?.length > 0 
+        ? addons.find(item => ['flannel', 'terway-eniip'].includes(item?.name))
+        : null;
+      set(this, 'ackCNI', cni?.name || 'flannel');
       set(this, 'historyK8sVerison', config.kubernetesVersion);
     }
   },
@@ -422,15 +465,11 @@ export default Ember.Component.extend(ClusterDriver, {
         errors.push(intl.t('clusterNew.aliyunkcs.vswitchId.required'));
       }
 
-      if ( !containerCidr ) {
-        errors.push(intl.t('clusterNew.aliyunkcs.containerCidr.required'));
-      }
-
       if ( !serviceCidr ) {
         errors.push(intl.t('clusterNew.aliyunkcs.serviceCidr.required'));
       }
 
-      if ( !this.validatePodCIDR() ) {
+      if ( containerCidr && !this.validatePodCIDR() ) {
         errors.push(intl.t('clusterNew.aliyunkcs.containerCidr.invalid'));
       }
 
@@ -457,7 +496,6 @@ export default Ember.Component.extend(ClusterDriver, {
       const vpcId = get(this, 'config.vpcId');
       const vswitchId = get(this, 'vswitchId');
       const containerCidr = get(this, 'config.containerCidr');
-      const serviceCidr = get(this, 'config.serviceCidr');
 
       const masterInstanceType = get(this, 'masterInstanceType');
 
@@ -473,15 +511,7 @@ export default Ember.Component.extend(ClusterDriver, {
         errors.push(intl.t('clusterNew.aliyunkcs.vswitchId.required'));
       }
 
-      if ( !containerCidr ) {
-        errors.push(intl.t('clusterNew.aliyunkcs.containerCidr.required'));
-      }
-
-      if ( !serviceCidr ) {
-        errors.push(intl.t('clusterNew.aliyunkcs.serviceCidr.required'));
-      }
-
-      if ( !this.validatePodCIDR() ) {
+      if ( containerCidr && !this.validatePodCIDR() ) {
         errors.push(intl.t('clusterNew.aliyunkcs.containerCidr.invalid'));
       }
 
@@ -514,9 +544,19 @@ export default Ember.Component.extend(ClusterDriver, {
       const intl = get(this, 'intl');
 
       const nodePoolList = get(this, 'nodePoolList');
-
       const clusterName = get(this, 'cluster.name');
+      
+      // terway need set podVswitchIds
+      if (!get(this, 'isFlannel')) {
+        set(this, 'config.podVswitchIds', [get(this, 'vswitchId')])
+      }
+      
       const config = JSON.parse(JSON.stringify(get(this, 'config')));
+
+      // terway service cidr is not req
+      if (!get(this, 'isFlannel')) {
+        delete config.containerCidr
+      }
 
       const aliyun_credential_secret = get(this, 'primaryResource.cloudCredentialId');
 
@@ -895,6 +935,20 @@ export default Ember.Component.extend(ClusterDriver, {
     })
   }),
 
+  ackCNIDidChange: observer('ackCNI', function() {
+    let ackCNI = get(this, 'ackCNI')
+    let addons = get(this, 'config.addons');
+    if (addons?.length > 0) {
+      // Since currently there is only one CNI configuration in addons, it can fully cover all cases
+      set(this, 'config.addons', [
+        {
+          name: ackCNI,
+          config: '',
+        }
+      ])
+    }
+  }),
+
   nodePoolActive: computed('config.node_pool_list.@each.{nodepool_id}', function() {
     const list = get(this, 'config.node_pool_list') || [];
 
@@ -925,11 +979,7 @@ export default Ember.Component.extend(ClusterDriver, {
   }),
 
   platformChoices: computed('intl.locale', 'config.clusterType', function() {
-    if (get(this, 'config.clusterType') === KUBERNETES) {
-      return PLATFORMTYPES.filter((item) => get(item, 'managed') !== true);
-    } else {
-      return PLATFORMTYPES;
-    }
+    return PLATFORMTYPES;
   }),
 
   nodeCidrMaskShowValue: computed('intl.locale', 'config.nodeCidrMask', function() {
@@ -975,8 +1025,12 @@ export default Ember.Component.extend(ClusterDriver, {
   isImportProvider: computed('router.currentRoute.queryParams', 'config.imported', function() {
     const { router } = this;
     const imported = get(this, 'config.imported');
+    
+    if (get(this, 'isNew')) {
+      return !!get(router, 'currentRoute.queryParams.importProvider')
+    }
 
-    return imported || !!get(router, 'currentRoute.queryParams.importProvider');
+    return imported;
   }),
 
   cloudCredentials: computed('model.cloudCredentials', function() {
@@ -1000,11 +1054,28 @@ export default Ember.Component.extend(ClusterDriver, {
   showRegion: computed('regionChoices', 'config.regionId', function() {
     return this.getChoicesLabel(get(this, 'regionChoices'), get(this, 'config.regionId'))
   }),
+  showCNI: computed('addonsCNIChoices', 'config.addons', function() {
+    const addons = get(this, 'config.addons') || [];
+    const ackCniOptions = ACK_CNI_OPTIONS;
+    const matchedAddon = addons.find(addon => 
+      ackCniOptions.some(option => option.value === addon.name)
+    );
+    const matchedLabel = matchedAddon 
+      ? ackCniOptions.find(option => option.value === matchedAddon.name).label 
+      : null;
+    return matchedLabel
+  }),
   showClusterType: computed('config.clusterType', function() {
     return this.getChoicesLabel(get(this, 'clusterTypeChoices'), get(this, 'config.clusterType'))
   }),
+  showClusterSpec: computed('config.clusterSpec', function() {
+    return this.getChoicesLabel(get(this, 'clusterSpecChoices'), get(this, 'config.clusterSpec'))
+  }),
   showMasterInstanceChargeType: computed('masterInstanceChargeTypeChoices', 'config.masterInstanceChargeType', function() {
     return this.getChoicesLabel(get(this, 'masterInstanceChargeTypeChoices'), get(this, 'config.masterInstanceChargeType'))
+  }),
+  isFlannel:computed('ackCNI', function() {
+    return get(this, 'ackCNI') === 'flannel'
   }),
   displayMasterSystemDiskCategory: computed('config.masterSystemDiskCategory', function() {
     const masterSystemDiskCategory = get(this, 'config.masterSystemDiskCategory');
@@ -1481,6 +1552,8 @@ export default Ember.Component.extend(ClusterDriver, {
         platform:             item.platform,
         system_disk_category: item.system_disk_category,
         system_disk_size:     item.system_disk_size,
+        runtime:              item.runtime,
+        runtime_version:      item.runtime_version,
         data_disk:            (!item.size || !item.category) ? [] : [{
           size:     item.size,
           category: item.category,

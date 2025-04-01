@@ -26,6 +26,12 @@ clusterNew:
       k8s: Dedicated Kubernetes
       managed: Managed Kubernetes
       label: Cluster Type
+    clusterSpec:
+      pro: Pro 
+      standard: STANDARD
+      label: Cluster specifications
+    cni:
+      label: Network Plugin
     master:
       title: Master Nodes
       detail: Configure the master nodes that will be used to launch Alibaba Kubernetes Service
@@ -140,4 +146,6 @@ clusterNew:
     instanceType:
       label: Instance Type
       required: Instance Type is required
+    runtime:
+      label: Containerd Version
 
