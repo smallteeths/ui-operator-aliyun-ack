@@ -26,6 +26,12 @@ clusterNew:
       k8s: 专有Kubernetes
       managed: 托管Kubernetes
       label: 集群类型
+    clusterSpec:
+      pro: Pro 版
+      standard: 基础版本
+      label: 集群规格
+    cni:
+      label: 网络插件
     master:
       title: Master 节点
       detail: 配置用于启动阿里巴巴Kubernetes服务的主节点
@@ -140,3 +146,5 @@ clusterNew:
     instanceType:
       label: 实例类型
       required: 实例类型必须设置
+    runtime:
+      label: Containerd 版本

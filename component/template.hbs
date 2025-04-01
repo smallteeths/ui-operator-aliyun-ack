@@ -96,7 +96,7 @@
         cancel=close
         createLabel="clusterNew.aliyunkcs.access.next"
         savingLabel="clusterNew.aliyunkcs.access.loading"
-        saveDisabled=(or (not primaryResource.cloudCredentialId) (not nodePoolActive) (and (not isNew) (not isActive) (not isK8sVersionError)))
+        saveDisabled=(not primaryResource.cloudCredentialId)
       }}
     {{/if}}
     {{#if (gte step 2)}}
@@ -173,6 +173,39 @@
             {{else}}
               <div>{{t "generic.default"}}</div>
             {{/if}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col span-6">
+            <label class="acc-label">
+              {{t "clusterNew.aliyunkcs.clusterSpec.label"}}{{field-required}}
+            </label>
+            {{#input-or-display
+              editable=(and (eq step 2) isNew)
+              value=(t showClusterSpec)
+            }}
+              {{new-select
+                class="form-control"
+                content=clusterSpecChoices
+                value=config.clusterSpec
+                localizedLabel=true
+              }}
+            {{/input-or-display}}
+          </div>
+          <div class="col span-6">
+            <label class="acc-label">
+              {{t "clusterNew.aliyunkcs.cni.label"}}{{field-required}}
+            </label>
+            {{#input-or-display
+              editable=(and (eq step 2) isNew)
+              value=showCNI
+            }}
+              {{new-select
+                class="form-control"
+                content=addonsCNIChoices
+                value=ackCNI
+              }}
+            {{/input-or-display}}
           </div>
         </div>
         {{#if kubernetesVersionDisabledAliyun}}
@@ -254,29 +287,31 @@
           </div>
         </div>
         <div class="row">
-          <div class="col span-6">
-            <label class="acc-label">
-              {{#tooltip-element
-                type="tooltip-basic"
-                model=(t "clusterNew.aliyunkcs.containerCidr.placeholder")
-                tooltipTemplate="tooltip-static"
-                aria-describedby="tooltip-base"
-                tooltipFor="tooltipLink"
-              }}
-                {{t "clusterNew.aliyunkcs.containerCidr.label"}}{{field-required}}
-              {{/tooltip-element}}
-            </label>
-            {{#input-or-display
-              editable=(and isNew (eq step 2))
-              value=config.containerCidr
-            }}
-              {{input
-                type="text"
-                class="form-control"
+          {{#if isFlannel}}
+            <div class="col span-6">
+              <label class="acc-label">
+                {{#tooltip-element
+                  type="tooltip-basic"
+                  model=(t "clusterNew.aliyunkcs.containerCidr.placeholder")
+                  tooltipTemplate="tooltip-static"
+                  aria-describedby="tooltip-base"
+                  tooltipFor="tooltipLink"
+                }}
+                  {{t "clusterNew.aliyunkcs.containerCidr.label"}}{{field-required}}
+                {{/tooltip-element}}
+              </label>
+              {{#input-or-display
+                editable=(and isNew (eq step 2))
                 value=config.containerCidr
               }}
-            {{/input-or-display}}
-          </div>
+                {{input
+                  type="text"
+                  class="form-control"
+                  value=config.containerCidr
+                }}
+              {{/input-or-display}}
+            </div>
+          {{/if}}
           <div class="col span-6">
             <label class="acc-label">
               {{#tooltip-element
@@ -550,16 +585,29 @@
                   <div>{{nodePool.name}}</div>
                 {{/if}}
               </div>
-              <div class="pull-right">
-                <button
-                  style="background:transparent"
-                  class="btn bg-transparent text-small vertical-middle"
-                  type="button"
-                  disabled={{or isImportProvider isChangedK8sVersion (and (not index) (eq nodePool.name 'default-nodepool'))}}
-                  {{action 'removeNodePool' nodePool}}
-                >
-                  {{t "nodeGroupRow.remove.label"}}
-                </button>
+              <div class="col span-6 aliyun-nodepool-runtime-container">
+                <label class="acc-label">
+                  {{t "clusterNew.aliyunkcs.runtime.label"}}{{field-required}}
+                </label>
+                {{#if (or (not nodePool.nodepool_id) isNew)}}
+                  {{input type="text"
+                    classNames="form-control"
+                    value=nodePool.runtime_version
+                  }}
+                {{else}}
+                  <div>{{nodePool.runtime_version}}</div>
+                {{/if}}
+                <div class="pull-right aliyun-nodepool-remove-button">
+                  <button
+                    style="background:transparent"
+                    class="btn bg-transparent text-small vertical-middle"
+                    type="button"
+                    disabled={{or isImportProvider isChangedK8sVersion (and (not index) (eq nodePool.name 'default-nodepool'))}}
+                    {{action 'removeNodePool' nodePool}}
+                  >
+                    {{t "nodeGroupRow.remove.label"}}
+                  </button>
+                </div>
               </div>
             </div>
             <div class="row">
@@ -648,48 +696,46 @@
                 {{/if}}
               </div>
             </div>
-            {{#unless (eq nodePool.name 'default-nodepool')}}
-              <div class="row">
-                <div class="col span-6">
-                  <label class="acc-label">
-                    {{t "clusterNew.aliyunkcs.storageType.label"}}
-                  </label>
-                  {{#input-or-display
-                    editable=(or (not nodePool.nodepool_id) isNew)
-                    value=nodePool.displayCategory
+            <div class="row">
+              <div class="col span-6">
+                <label class="acc-label">
+                  {{t "clusterNew.aliyunkcs.storageType.label"}}
+                </label>
+                {{#input-or-display
+                  editable=(or (not nodePool.nodepool_id) isNew)
+                  value=nodePool.displayCategory
+                }}
+                  {{searchable-select
+                    class="form-control"
+                    content=nodePool.dataDisk
+                    localizedLabel=true
+                    value=nodePool.category
                   }}
-                    {{searchable-select
-                      class="form-control"
-                      content=nodePool.dataDisk
-                      localizedLabel=true
-                      value=nodePool.category
-                    }}
-                  {{/input-or-display}}
-                </div>
-                <div class="col span-6">
-                  <label class="acc-label">
-                    {{t "clusterNew.aliyunkcs.storageSize.label"}}
-                  </label>
-                    <div class="input-group">
-                      {{#input-or-display
-                        editable=(or (not nodePool.nodepool_id) isNew)
-                        value=nodePool.size
-                      }}
-                        {{input-integer
-                          min=0
-                          max=32768
-                          value=nodePool.size
-                          classNames="form-control"
-                          placeholder=(t "clusterNew.aliyunkcs.rootSize.placeholder")
-                        }}
-                      {{/input-or-display}}
-                      <span class="input-group-addon bg-default">
-                        {{t "generic.gigabyte"}}
-                      </span>
-                    </div>
-                </div>
+                {{/input-or-display}}
               </div>
-            {{/unless}}
+              <div class="col span-6">
+                <label class="acc-label">
+                  {{t "clusterNew.aliyunkcs.storageSize.label"}}
+                </label>
+                  <div class="input-group">
+                    {{#input-or-display
+                      editable=(or (not nodePool.nodepool_id) isNew)
+                      value=nodePool.size
+                    }}
+                      {{input-integer
+                        min=0
+                        max=32768
+                        value=nodePool.size
+                        classNames="form-control"
+                        placeholder=(t "clusterNew.aliyunkcs.rootSize.placeholder")
+                      }}
+                    {{/input-or-display}}
+                    <span class="input-group-addon bg-default">
+                      {{t "generic.gigabyte"}}
+                    </span>
+                  </div>
+              </div>
+            </div>
             <div class="row">
               <div class="col span-6">
                 <label class="acc-label">

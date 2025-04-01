@@ -2,3 +2,11 @@
   background-image: url('aliyunkcs.svg');
   background-size: 60px 60px;
 }
+.aliyun-nodepool-runtime-container {
+  position: relative;
+}
+.aliyun-nodepool-remove-button {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+}
