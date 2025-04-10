@@ -51,7 +51,7 @@ const VERSIONS = [
     value:          K8S_1_28_15,
     label:          K8S_1_28_15,
     rancherEnabled: true,
-    aliyunEnabled:  true,
+    aliyunEnabled:  false,
   },
 ];
 const DEFAULT_KUBERNETES_VERSION = K8S_1_31_1;
@@ -246,7 +246,7 @@ const DEFAULT_NODE_GROUP_CONFIG = {
   instance_types:           '',
   type:                     'nodePool',
   runtime:                  'containerd',
-  runtime_version:          '1.6.36'
+  runtime_version:          '1.6.38'
 }
 
 const MASTER = [{
@@ -1554,7 +1554,7 @@ export default Ember.Component.extend(ClusterDriver, {
         system_disk_size:     item.system_disk_size,
         runtime:              item.runtime,
         runtime_version:      item.runtime_version,
-        data_disk:            (!item.size || !item.category) ? [] : [{
+        data_disk:            (!item?.size || !item?.category || String(item?.size) === '0') ? [] : [{
           size:     item.size,
           category: item.category,
         }],
