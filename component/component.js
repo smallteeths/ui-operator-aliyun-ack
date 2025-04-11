@@ -33,8 +33,15 @@ const K8S_1_24_6 = '1.24.6-aliyun.1';
 const K8S_1_28_15 = '1.28.15-aliyun.1';
 const K8S_1_30_7 = '1.30.7-aliyun.1';
 const K8S_1_31_1 = '1.31.1-aliyun.1';
+const K8S_1_32_1 = '1.32.1-aliyun.1'
 
 const VERSIONS = [
+  {
+    value:          K8S_1_32_1,
+    label:          K8S_1_32_1,
+    rancherEnabled: true,
+    aliyunEnabled:  true,
+  },
   {
     value:          K8S_1_31_1,
     label:          K8S_1_31_1,
@@ -46,15 +53,9 @@ const VERSIONS = [
     label:          K8S_1_30_7,
     rancherEnabled: true,
     aliyunEnabled:  true,
-  },
-  {
-    value:          K8S_1_28_15,
-    label:          K8S_1_28_15,
-    rancherEnabled: true,
-    aliyunEnabled:  false,
-  },
+  }
 ];
-const DEFAULT_KUBERNETES_VERSION = K8S_1_31_1;
+const DEFAULT_KUBERNETES_VERSION = K8S_1_32_1;
 const KUBERNETES = 'Kubernetes';
 const MANAGED = 'ManagedKubernetes';
 const ACK_CLUSTER_SPEC_STANDARD = 'ack.standard'
