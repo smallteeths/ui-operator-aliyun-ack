@@ -28,33 +28,31 @@ const defaultBase  = 1024;
 
 const languages = LANGUAGE;
 const PAGE_SIZE = 50;
-const K8S_1_26_15 = '1.26.15-aliyun.1';
-const K8S_1_24_6 = '1.24.6-aliyun.1';
-const K8S_1_28_15 = '1.28.15-aliyun.1';
-const K8S_1_30_7 = '1.30.7-aliyun.1';
-const K8S_1_31_1 = '1.31.1-aliyun.1';
+const K8S_1_31_9 = '1.31.9-aliyun.1';
+const K8S_1_32_1 = '1.32.1-aliyun.1';
+const K8S_1_33_1 = '1.33.1-aliyun.1';
 
 const VERSIONS = [
   {
-    value:          K8S_1_31_1,
-    label:          K8S_1_31_1,
+    value:          K8S_1_31_9,
+    label:          K8S_1_31_9,
     rancherEnabled: true,
     aliyunEnabled:  true,
   },
   {
-    value:          K8S_1_30_7,
-    label:          K8S_1_30_7,
-    rancherEnabled: true,
+    value:          K8S_1_32_1,
+    label:          K8S_1_32_1,
+    rancherEnabled: false,
     aliyunEnabled:  true,
   },
   {
-    value:          K8S_1_28_15,
-    label:          K8S_1_28_15,
-    rancherEnabled: true,
-    aliyunEnabled:  false,
+    value:          K8S_1_33_1,
+    label:          K8S_1_33_1,
+    rancherEnabled: false,
+    aliyunEnabled:  true,
   },
 ];
-const DEFAULT_KUBERNETES_VERSION = K8S_1_31_1;
+const DEFAULT_KUBERNETES_VERSION = K8S_1_31_9;
 const KUBERNETES = 'Kubernetes';
 const MANAGED = 'ManagedKubernetes';
 const ACK_CLUSTER_SPEC_STANDARD = 'ack.standard'
